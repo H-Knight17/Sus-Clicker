@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sus Clicker - Clicks = </title>
+    <style>
+        body{
+            background-color: #141414;
+            display: flex;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        div#clickerSide{
+            flex: 1; /* Faz o lado do clicker ocupar todo o espaço que sobrar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        h2#points{
+            background: #3c3c3c;
+            color: white;
+            font: normal 20pt Arial;
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+        }
+        h3#pointsPerSecond{
+            background: #3c3c3c;
+            color: white;
+            font: normal 20pt Arial;
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+        }
+        img#sus{
+            border-radius: 150px;
+            border: 3px solid #080808 ;
+            cursor: pointer;
+        }
+        img:active {
+            transform: scale(0.9); /* Diminui 10% enquanto o mouse estiver apertado */
+            transition: transform 0.001s;
+        }
+        .floating-number{
+            position: absolute;
+            color: white;
+            text-shadow: 0 0 10px white;
+            text-shadow: 
+                -1px -2px 0 #000,  
+                1px -2px 0 #000,
+                -1px  2px 0 #000,
+                1px  2px 0 #000;
+            font-weight: bold;
+            font-size: 20pt;
+            pointer-events: none;
+            animation: floatUp 0.8s ease-out forwards;
+            z-index: 100;
+        }
+        @keyframes floatUp{
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-100px); opacity: 0; }
+        }
+        button#surprise{
+            background: #141111;
+            color: white;
+            font: normal 15pt Arial;
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+            border: 3px solid #080808;
+        }
+        div#leftSide{
+
+            background: #2a2a2a;
+            width: 400px;
+            height: 95vh;
+            border-radius: 15px;
+            border-top: 5px solid #ff0000;
+            border-left: 5px solid #ff0000;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        div#shop {
+            background: #2a2a2a;
+            width: fit-content;
+            height: 75vh;
+            border-radius: 15px;
+            border: 5px solid #ff4646;
+            overflow-y: auto;
+            padding: 15px;
+        }
+        .titleShop, .titleUpgrade{
+            color: white;
+            font-family: 'Arial Black', sans-serif;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 20px;
+
+            min-height: 30px; 
+            width: 100%;
+    
+            transition: all 0.3s ease;
+        }
+        .titleShop::after, .titleUpgrade::after {
+            content: '';
+        }
+        .titleShop:hover::after{
+            content: 'Loja';
+            font: normal 20pt Arial;
+            color: white;
+            text-shadow: 0 0 20px white;
+        }
+        .titleUpgrade:hover::after{
+            content: 'Upgrades';
+            font: normal 20pt Arial;
+            color: white;
+            text-shadow: 0 0 20px  white;
+        }
+        .upgradeArea {
+            background: #1a1a1a;
+            width: 100%;
+            min-height: 100px;
+            max-height: 25vh;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow-x: auto;
+            overflow-y: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 2px dashed #ff4646;
+        }
+        .meme-card {
+            background: #545454;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 15px;
+            cursor: pointer;
+            border: 3px solid #000096;
+            color: white;
+            display: flex; 
+            align-items: center;
+            gap: 15px;
+            transition: all 0.35s ease;
+        }
+        .meme-card:hover{
+            border: 3px solid #2424ff;
+            box-shadow: 0 0 3px #2424ff;
+            transform: scale(1.02);
+        }
+        .hidden-meme{
+            display: none !important;
+        }
+        .meme-card img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .meme-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .meme-info h3, .meme-info p {
+            margin: 2px 0;
+        }
+        button#surprise{
+            margin-top: 20px;
+        }
+        /* Media Query: Aplica estas regras apenas em telas com menos de 768px (celulares/tablets) */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column; /* Coloca o clicker em cima e a loja embaixo */
+                overflow-y: auto;       /* Permite rolar a página para baixo */
+                height: auto;           /* Ajusta a altura para caber tudo */
+            }
+
+            div#clickerSide {
+                width: 100%;
+                padding: 20px 0;
+                min-height: 50vh;      /* Ocupa metade da tela para o Sus */
+            }
+
+            div#leftSide {
+                width: 100% !important; /* Faz a loja ocupar a largura toda */
+                height: auto;
+                border-radius: 20px 20px 0 0; /* Arredonda só em cima */
+                border-left: none;
+                border-top: 5px solid #ff0000;
+            }
+
+            div#shop {
+                height: 60vh; /* Define um tamanho fixo para a loja não ficar infinita */
+            }
+
+            img#sus {
+                width: 180px; /* Diminui um pouco o tamanho do Sus no celular */
+            }
+
+            .meme-card {
+                padding: 8px; /* Compacta os cards para caberem melhor */
+            }
+}
+    </style>
+</head>
+<body>
+    <button onclick="resetAllClick()">Resetar</button>
+
+    <div id="clickerSide">
+    <h2 id="points">Social Credits = </h2>
+    <h3 id="pointsPerSecond">por segundo: </h3>
+    <img src="images/sus.png" alt="Sus" id="sus">
+    <button id="surprise">Surprise</button>
+    </div>
+
+    <div id="leftSide">
+
+        <div class="upgradeArea" id="upgradeArea">
+            <div class="titleUpgrade"></div>
+        </div>
+
+        <div id="shop">
+
+            <div class="titleShop"></div>
+
+            <div class="meme-card" onclick="comprarMeme(0, 'reset')">
+                <h3>The Grand Reset of Memes</h3>
+                <img src="images/memreset.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-reset">Ano: 2026</p>
+                    <p id="cost-reset">Custo: 600.000.000.000.000.000</p>
+                    <p id="owned-reset">Quantidade: 0</p>
+                    <p id="cps-reset">Gera ???</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(1, 'tralalero')">
+                <h3>Tralalero Tralala</h3>
+                <img src="images/tralalero.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-tralalero">Ano: 2025</p>
+                    <p id="cost-tralalero">Custo: 15</p>
+                    <p id="owned-tralalero">Quantidade: 0</p>
+                    <p id="cps-tralalero">Gera 0.5/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(2, 'chillGuy')">
+                <h3>Cara Tranquilo</h3>
+                <img src="images/chillGuy.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-chillGuy">Ano: 2024</p>
+                    <p id="cost-chillGuy">Custo: 100</p>
+                    <p id="owned-chillGuy">Quantidade: 0</p>
+                    <p id="cps-chillGuy">Gera 2/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(3, 'skibidi')">
+                <h3>Skibidi Toilet</h3>
+                <img src="images/skibidi.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-skibidi">Ano: 2023</p>
+                    <p id="cost-skibidi">Custo: 1.100</p>
+                    <p id="owned-skibidi">Quantidade: 0</p>
+                    <p id="cps-skibidi">Gera 8/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(4, 'feast')">
+                <h3>Mr Feast</h3>
+                <img src="images/mrFeast.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-feast">Ano: 2022</p>
+                    <p id="cost-feast">Custo: 12.000</p>
+                    <p id="owned-feast">Quantidade: 0</p>
+                    <p id="cps-feast">Gera 47/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(5, 'axel')">
+                <h3>Axel in Harlem</h3>
+                <img src="images/axel.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-axel">Ano: 2021</p>
+                    <p id="cost-axel">Custo: 130.000</p>
+                    <p id="owned-axel">Quantidade: 0</p>
+                    <p id="cps-axel">Gera 260/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(6, 'coffin')">
+                <h3>Coffin Dance</h3>
+                <img src="images/coffin.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-coffin">Ano: 2020</p>
+                    <p id="cost-coffin">Custo: 1.400.000</p>
+                    <p id="owned-coffin">Quantidade: 0</p>
+                    <p id="cps-coffin">Gera 1.100/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(7, 'woman')">
+                <h3>Woman Yelling Cat</h3>
+                <img src="images/woman.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-woman">Ano: 2019</p>
+                    <p id="cost-woman">Custo: 20.000.000</p>
+                    <p id="owned-woman">Quantidade: 0</p>
+                    <p id="cps-woman">Gera 8.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(8, 'knuckles')">
+                <h3>Ugandan Knuckles</h3>
+                <img src="images/knuckles.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-knuckles">Ano: 2018</p>
+                    <p id="cost-knuckles">Custo: 330.000.000</p>
+                    <p id="owned-knuckles">Quantidade: 0</p>
+                    <p id="cps-knuckles">Gera 47.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(9, 'bf')">
+                <h3>Distracted BF</h3>
+                <img src="images/discractedBF.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-bf">Ano: 2017</p>
+                    <p id="cost-bf">Custo: 510.000.000</p>
+                    <p id="owned-bf">Quantidade: 0</p>
+                    <p id="cps-bf">Gera 95.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(10, 'harambe')">
+                <h3>Harambe</h3>
+                <img src="images/harambe.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-harambe">Ano: 2016</p>
+                    <p id="cost-harambe">Custo: 750.000.000</p>
+                    <p id="owned-harambe">Quantidade: 0</p>
+                    <p id="cps-harambe">Gera 160.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(11, 'john')">
+                <h3>John Cena</h3>
+                <img src="images/john.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-john">Ano: 2015</p>
+                    <p id="cost-john">Custo: 1.250.000.000</p>
+                    <p id="owned-john">Quantidade: 0</p>
+                    <p id="cps-john">Gera 285.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(12, 'kermit')">
+                <h3>Kermit</h3>
+                <img src="images/kermit.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-kermit">Ano: 2014</p>
+                    <p id="cost-kermit">Custo: 3.900.000.000</p>
+                    <p id="owned-kermit">Quantidade: 0</p>
+                    <p  id="cps-kermit">Gera 780.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(13, 'doge')">
+                <h3>Doge</h3>
+                <img src="images/doge.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-doge">Ano: 2013</p>
+                    <p id="cost-doge">Custo: 15.000.000.000</p>
+                    <p id="owned-doge">Quantidade: 0</p>
+                    <p id="cps-doge">Gera 2.300.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(14, 'gangnam')">
+                <h3>Gangnam Style</h3>
+                <img src="images/gangnam.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-gangnam">Ano: 2012</p>
+                    <p id="cost-gangnam">Custo: 85.000.000.000</p>
+                    <p id="owned-gangnam">Quantidade: 0</p>
+                    <p id="cps-gangnam">Gera 9.800.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(15, 'nyan')">
+                <h3>Nyan Cat</h3>
+                <img src="images/nyan.png" alt="">
+                <div class="meme-info">
+                    <p id="year-nyan">Ano: 2011</p>
+                    <p id="cost-nyan">Custo: 510.000.000.000</p>
+                    <p id="owned-nyan">Quantidade: 0</p>
+                    <p id="cps-nyan">Gera 45.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(16 ,'troll')">
+                <h3>Troll Face</h3>
+                <img src="images/troll.png" alt="">
+                <div class="meme-info">
+                    <p id="year-troll">Ano: 2010</p>
+                    <p id="cost-troll">Custo: 2.800.000.000.000</p>
+                    <p id="owned-troll">Quantidade: 0</p>
+                    <p id="cps-troll">Gera 230.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(17, 'keyboard')">
+                <h3>Keyboard Cat</h3>
+                <img src="images/keyboardCat.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-keyboard">Ano: 2009</p>
+                    <p id="cost-keyboard">Custo: 16.000.000.000.000</p>
+                    <p id="owned-keyboard">Quantidade: 0</p>
+                    <p id="cps-keyboard">Gera 1.100.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(18, 'chipmunk')">
+                <h3>Dramatic Chipmunk</h3>
+                <img src="images/chipmunk.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-chipmunk">Ano: 2008</p>
+                    <p id="cost-chipmunk">Custo: 150.000.000.000.000</p>
+                    <p id="owned-chipmunk">Quantidade: 0</p>
+                    <p id="cps-chipmunk">Gera 8.200.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(19, 'rick')">
+                <h3>Rickroll</h3>
+                <img src="images/rickroll.jpeg" alt="">
+                <div class="meme-info">    
+                    <p id="year-rick">Ano: 2007</p>
+                    <p id="cost-rick">Custo: 1.400.000.000.000.000</p>
+                    <p id="owned-rick">Quantidade: 0</p>
+                    <p id="cps-rick">Gera 65.000.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(20, 'surprise')">
+                <h3>Surprise Motherfucker</h3>
+                <img src="images/dexter.gif" alt="">
+                <div class="meme-info">
+                    <p id="year-surprise">Ano: 2006</p>
+                    <p id="cost-surprise">Custo: 12.000.000.000.000.000</p>
+                    <p id="owned-surprise">Quantidade: 0</p>
+                    <p id="cps-surprise">Gera 430.000.000.000/s</p>
+                </div>
+            </div>
+
+            <div class="meme-card hidden-meme" onclick="comprarMeme(21, 'leeroy')">
+                <h3>Leeroy Jenkins</h3>
+                <img src="images/leroyJenkins.jpeg" alt="">
+                <div class="meme-info">
+                    <p id="year-leeroy">Ano: 2005</p>
+                    <p id="cost-leeroy">Custo: 99.000.000.000.000.000</p>
+                    <p id="owned-leeroy">Quantidade: 0</p>
+                    <p id="cps-leeroy">Gera 1.900.000.000.000/s</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let pontos = localStorage.getItem('pontos')
+        let pontosPorSegundo = localStorage.getItem('pointsPerSecond')
+        let valorClick = localStorage.getItem('valorClick')
+        let clicksTotais = localStorage.getItem('clicksTotais')
+        
+        let clickValue = valorClick ? Number(valorClick) : 1
+        let totalClicks = clicksTotais ? Number(clicksTotais) : 0
+        let upgradeLiberado = false
+        let points = pontos ? Number(pontos) : 0
+        let pointsPerSecond = pontosPorSegundo ? Number(pontosPorSegundo) : 0
+        let lastClicks = []
+        let pointManager = document.getElementById('points')
+        let ppsManager = document.getElementById('pointsPerSecond')
+        let susClicker = document.getElementById('sus')
+        let surprise = document.getElementById('surprise')
+        let surpriseCooldown = false
+
+        pointManager.innerHTML = `Social Credits = ${points.toFixed(1)}`
+        ppsManager.innerHTML = 'por segundo: 0'
+        document.title = `${points.toFixed(1)} Social Credits - Sus Clicker`
+
+        susClicker.addEventListener('click', susClick)
+        surprise.addEventListener('click', surpriseClick)
+
+        const somClique = new Audio('sounds/the-rock-sound-effect.mp3')
+        const somJumpscare = new Audio('sounds/sonic-exe-scream.mp3')
+        const somNope = new Audio('sounds/nop.mp3')
+
+        let construçoes = [
+            {
+                id: 'reset',
+                nome: 'The Meme Reset',
+                ano: '2026 (Loop)',
+                custo: 600e15,
+                cps: Infinity,
+                som: 'sounds/thereset.mp3',
+                resets: 0
+            },
+
+            {
+                id: 'tralalero',
+                nome: 'Tralalero Tralala',
+                ano: 2025,
+                custo: 15,
+                cps: 0.5,
+                som: 'sounds/tralalero.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'chillGuy',
+                nome: 'Cara Tranquilo',
+                ano: 2024,
+                custo: 100,
+                cps: 2,
+                som: 'sounds/chillGuy.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'skibidi',
+                nome: 'Skibidi Toilet',
+                ano: 2023,
+                custo: 1100,
+                cps: 8,
+                som: 'sounds/skibidi.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'feast',
+                nome: 'Mr Feast',
+                ano: 2022,
+                custo: 12000,
+                cps: 47,
+                som: 'sounds/feast.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'axel',
+                nome: 'Axel in Harlem',
+                ano: 2021,
+                custo: 130000,
+                cps: 260,
+                som: 'sounds/axel.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'coffin',
+                nome: 'Coffin Dance',
+                ano: 2020,
+                custo: 1400000,
+                cps: 1100,
+                som: 'sounds/coffinDance.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'woman',
+                nome: 'Woman Yelling at a Cat',
+                ano: 2019,
+                custo: 20000000,
+                cps: 8000,
+                som: 'sounds/woman-yeling-cat.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'knuckles',
+                nome: 'Ugandan Knuckles',
+                ano: 2018,
+                custo: 330000000,
+                cps: 47000,
+                som: 'sounds/knuckles.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'bf',
+                nome: 'Distracted Boyfriend',
+                ano: 2017,
+                custo: 510000000,
+                cps: 95000,
+                som: 'sounds/distractedBF.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+
+            {
+                id: 'harambe',
+                nome: 'Harambe',
+                ano: 2016,
+                custo: 750000000,
+                cps: 160000,
+                som: 'sounds/harambe.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'john',
+                nome: 'John Cena',
+                ano: 2015,
+                custo: 1250000000,
+                cps: 285000,
+                som: 'sounds/john.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'kermit',
+                nome: 'Kermit',
+                ano: 2014,
+                custo: 3900000000,
+                cps: 780000,
+                som: 'sounds/kermit.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'doge',
+                nome: 'Doge (RIP 2024)',
+                ano: 2013,
+                custo: 15000000000,
+                cps: 2300000,
+                som: 'sounds/doge.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'gangnam',
+                nome: 'Gangnam Style',
+                ano: 2012,
+                custo: 85000000000,
+                cps: 9800000,
+                som: 'sounds/gangnam.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'nyan',
+                nome: 'Nyan Cat',
+                ano: 2011,
+                custo: 510000000000,
+                cps: 45000000,
+                som: 'sounds/nyan.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'troll',
+                nome: 'Trollface',
+                ano: 2010,
+                custo: 2800000000000,
+                cps: 230000000,
+                som: 'sounds/troll.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'keyboard',
+                nome: 'Keyboard Cat',
+                ano: 2009,
+                custo: 16000000000000,
+                cps: 1100000000,
+                som: 'sounds/keyboardCat.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'chipmunk',
+                nome: 'Dramatic Chipmunk',
+                ano: 2008,
+                custo: 150000000000000,
+                cps: 8200000000,
+                som: 'sounds/dramatic.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'rick',
+                nome: 'Rickroll',
+                ano: 2007,
+                custo: 1400000000000000,
+                cps: 65000000000,
+                som: 'sounds/rick.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'surprise',
+                nome: 'Surprise, Motherfucker!',
+                ano: 2006,
+                custo: 12000000000000000,
+                cps: 430000000000,
+                som: 'sounds/surprise.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            },
+
+            {
+                id: 'leeroy',
+                nome: 'Leeroy Jenkins',
+                ano: 2005,
+                custo: 99000000000000000,
+                cps: 1900000000000,
+                som: 'sounds/leroy.mp3',
+                quantidade: 0,
+                multiplier: 0,
+                multiplierMax: 10
+            }
+
+        ]
+
+        let quantidade = localStorage.getItem('quantidades')
+
+        if(quantidade){
+            let amount = JSON.parse(quantidade)
+            amount.forEach((amount, index) => {
+                if(construçoes[index]){
+                    construçoes[index].quantidade = amount
+                    construçoes[index].custo = Math.ceil(construçoes[index].custo * Math.pow(1.15, amount))
+                }
+            })
+        }
+
+        function resetAllClick(){
+            let confirmacao1 = confirm(`Você tem certeza? Seus ${formatarGrande(points)} vão sumir!`)
+
+            if (confirmacao1) {
+                let confirmacao2 = prompt("Digite 'RESETAR' para confirmar:");
+                if (confirmacao2 && confirmacao2.toUpperCase() === "RESETAR") {
+                    construçoes.forEach(meme => {
+                        meme.quantidade = 0;
+                        meme.custo = construçoes.find(c => c.id === meme.id).custo;
+                    });
+
+                    localStorage.clear();
+
+                    points = 0;
+                    pointsPerSecond = 0;
+                    totalClicks = 0;
+                    clickValue = 1;
+
+                    location.reload();
+                }
+            }
+        }
+
+        function formatarGrande(n) {
+            if (n === Infinity || n === "Infinity") return "INFINITO"
+            if (isNaN(n)) return "0"
+            if (n >= 1e18) return (n / 1e18).toFixed(2) + " Quintilhões"
+            if (n >= 1e15) return (n / 1e15).toFixed(2) + " Quatrilhões"
+            if (n >= 1e12) return (n / 1e12).toFixed(2) + " Trilhões"
+            if (n >= 1e9) return (n / 1e9).toFixed(2) + " Bilhões"
+            if (n >= 1e6) return (n / 1e6).toFixed(2) + " Milhões"
+            return n.toLocaleString('pt-BR', {
+                minimumFractionDigits: 0, 
+                maximumFractionDigits: 1
+            })
+        }
+
+        function atualizarLojaInicial() {
+            construçoes.forEach(meme => {
+        
+            let elCusto = document.getElementById(`cost-${meme.id}`)
+            if (elCusto) elCusto.innerHTML = `Custo: ${formatarGrande(meme.custo)}`
+
+            let elCPS = document.getElementById(`cps-${meme.id}`)
+            if (elCPS) elCPS.innerHTML = `Gera: ${formatarGrande(meme.cps)}/s`
+
+            let elAmount = document.getElementById(`owned-${meme.id}`)
+            if (elAmount) elAmount.innerHTML = `Quantidade: ${meme.quantidade}`
+            })
+        }
+
+        atualizarLojaInicial();
+
+        function susClick(e){
+            points += clickValue
+            totalClicks += 1
+            lastClicks.push(Date.now())
+            pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
+
+            somClique.currentTime = 0;
+            somClique.play()
+
+            let num = document.createElement('div');
+            num.innerText = `+${clickValue}`;
+            num.className = 'floating-number';
+    
+            num.style.left = `${e.pageX}px`;
+            num.style.top = `${e.pageY}px`;
+    
+            document.body.appendChild(num);
+    
+            setTimeout(() => num.remove(), 800);
+
+            if(totalClicks == 100 && clickValue < 2) criarUpgradeClick('👆', 'Clcker de Ferro', 2, 500)
+
+            if(totalClicks == 250 && clickValue < 5) criarUpgradeClick('✊', 'Punho dos Memes', 5, 1000)
+
+            if(totalClicks == 500 && clickValue < 15) criarUpgradeClick('🖱️', 'Super Clicker', 15, 1500)
+
+            if(totalClicks == 1000 && clickValue < 50) criarUpgradeClick('⛏️', 'Memecraft', 50, 2000)
+
+            if(totalClicks == 5000 && clickValue < 100) criarUpgradeClick('🗿', 'Sigma', 100, 5000)
+        }
+
+        function criarUpgradeClick(icon, name, newValue, cost){
+            let area = document.getElementById('upgradeArea')
+
+            let upgradeBtn = document.createElement('div')
+            upgradeBtn.style.cssText = `
+                width: 50px;
+                height: 50px;
+                background-color: gold;
+                border-radius: 10px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid white;
+                font-size: 20px;
+                box-shadow: 0 0 10px gold;
+            `
+
+            upgradeBtn.innerHTML = icon
+            upgradeBtn.title = `${name}: Cliques valem ${newValue}! Custo: ${cost}`
+
+            upgradeBtn.onclick = function() {
+                if (points >= cost) {
+                    points -= cost
+                    clickValue = newValue
+
+                    localStorage.setItem('valorClick', clickValue)
+
+                    area.removeChild(upgradeBtn)
+                    pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+                }
+                else {
+                    somNope.play()
+                }
+            }
+
+            area.appendChild(upgradeBtn)
+
+        }
+
+        function comprarMeme(index, idPrefixo) {
+            let meme = construçoes[index]
+
+            if (points >= meme.custo) {
+                points -= meme.custo
+                meme.quantidade++
+
+                document.getElementById(`owned-${idPrefixo}`).innerHTML = `Quantidade: ${meme.quantidade}`
+        
+                meme.custo = Math.ceil(meme.custo * 1.15)
+                document.getElementById(`cost-${idPrefixo}`).innerHTML = `Custo: ${formatarGrande(meme.custo)}`
+
+                document.getElementById(`cps-${idPrefixo}`).innerHTML = `Gera: ${formatarGrande(meme.cps)}`
+        
+                let audioMeme = new Audio(meme.som);
+                audioMeme.onerror = function() {
+                console.error("Erro ao carregar o som: " + meme.som);
+                };
+                audioMeme.play().catch(e => console.log("Erro ao tocar:", e));
+
+                if(meme.quantidade == 5 && meme.multiplier < 1) criarUpgradeMeme('📄', 'Certificado de Viral', 2, 1000) //2
+
+                if(meme.quantidade == 10 && meme.multiplier < 2) criarUpgradeMeme('🎤', 'Entrevista no Podpah', 2, 2500) //4
+
+                if(meme.quantidade == 25 && meme.multiplier < 3) criarUpgradeMeme('⚡', 'Edição de Status', 2, 5000) //8
+
+                if(meme.quantidade == 50 && meme.multiplier < 4) criarUpgradeMeme('🎭', 'Filtro do TikTok', 2, 7500) //16
+
+                if(meme.quantidade == 100 && meme.multiplier < 5) criarUpgradeMeme('💎', 'Versão Remasterizada', 2, 10000) //32
+
+                if(meme.quantidade == 250 && meme.multiplier < 6) criarUpgradeMeme('🌎', 'Dominação Global', 2, 15000) //64
+
+                if(meme.quantidade == 500 && meme.multiplier < 7) criarUpgradeMeme('🧠', 'Conhecimento Ancestral', 2, 30000) //128
+
+                if(meme.quantidade == 1000 && meme.multiplier < 8) criarUpgradeMeme('🌌', 'Meme Atemporal', 2, 75000) //256
+
+                if(meme.quantidade == 1250 && meme.multiplier < 9) criarUpgradeMeme('🛐', 'Religião da Internet', 2, 100000) //512
+
+                if(meme.quantidade == 1500 && meme.multiplier < 10) criarUpgradeMeme('🧬', 'Ascensão Transcendental', 2, 500000) //1024
+
+                if (index == 0 && idPrefixo == 'reset'){
+                    points = Infinity
+                    pointManager.innerHTML = `Social Credits = ${points}`
+                    document.title = `${points} Social Credits - Sus Clicker`
+
+                    document.body.style.transition = "filter 0.5s"
+                    document.body.style.filter = "invert(100%) brightness(1.5)"
+                }
+
+                pointManager.innerHTML = `Social Credits = ${formatarGrande(points)}`
+            }
+            else {
+                somNope.play()
+            }
+            
+            
+        }
+
+        function criarUpgradeMeme(icon, name, Multiplier, cost){
+            let area = document.getElementById('upgradeArea')
+
+            if (area.innerText.includes(name)) return
+
+            let upgradeBtn = document.createElement('div')
+            upgradeBtn.style.cssText = `
+                width: 50px;
+                height: 50px;
+                background-color: blue;
+                border-radius: 10px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 2px solid white;
+                font-size: 20px;
+                box-shadow: 0 0 10px blue;
+            `
+
+            upgradeBtn.innerHTML = icon
+            upgradeBtn.title = `${name}: Cliques valem ${Multiplier}! Custo: ${cost}`
+
+            upgradeBtn.onclick = function() {
+                if (points >= cost && meme.multiplier < meme.multiplierMax) {
+                    points -= cost
+                    meme.cps *= Multiplier
+                    meme.multiplier += 1
+
+                    localStorage.setItem('multiplicador', meme.multiplier)
+
+                    area.removeChild(upgradeBtn)
+                    pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+                }
+                else {
+                    somNope.play()
+                }
+            }
+
+            area.appendChild(upgradeBtn)
+
+        }
+
+        setInterval(function(){
+            let now = Date.now()
+
+            lastClicks = lastClicks.filter(tempo => now - tempo < 1000)
+
+            let ppsClicks = lastClicks.length * clickValue
+
+            let ppsNow = pointsPerSecond + ppsClicks
+
+            pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+            ppsManager.innerHTML = `por segundo: ${formatarGrande(ppsNow)}`
+            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
+        }, 20)
+
+        setInterval(function() {
+
+            let atualPPS = 0
+
+            construçoes.forEach(meme => {
+                if(meme.quantidade>0){
+                    atualPPS += (meme.quantidade * meme.cps)
+                }
+            })
+
+            pointsPerSecond = atualPPS
+            points += pointsPerSecond
+
+            pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+            ppsManager.innerHTML = `por segundo: ${formatarGrande(pointsPerSecond)}`
+            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
+
+            construçoes.forEach(meme => {
+                if (points >= (meme.custo * 0.75) || meme.quantidade > 0) {
+                    let card = document.getElementById(`cost-${meme.id}`).closest('.meme-card');
+                    if (card) card.classList.remove('hidden-meme');
+                }
+            });
+
+            localStorage.setItem('pontos', points)
+            localStorage.setItem('pontosPorSegundo', pointsPerSecond)
+            localStorage.setItem('valorClick', clickValue)
+            localStorage.setItem('clicksTotais', totalClicks);
+            localStorage.setItem('quantidades', JSON.stringify(construçoes.map(c => c.quantidade)))
+
+        }, 999)
+
+        function surpriseClick(){
+            if(surpriseCooldown){
+                somNope.play()
+                return
+            }
+
+            somJumpscare.currentTime = 0
+            somJumpscare.play()
+
+            let bonus = 0
+
+            if(pointsPerSecond >= 100e12){
+                bonus = Math.floor(Math.random() * 100e9) + 10e9
+            }
+            else if(pointsPerSecond >= 10e9){
+                bonus = Math.floor(Math.random() * 100e6) + 10e6
+            }
+            //Muitos ifs 😭
+            else{
+                bonus = Math.floor(Math.random() * 101) + 1
+            }
+
+            points += bonus
+            
+            surpriseCooldown = true
+            surprise.disabled = true
+            surprise.style.opacity = '0.25'
+            surprise.style.cursor = 'not-allowed'
+
+            let min = 20 * 60 * 1000
+            let max = 90 * 60 * 1000
+            let cooldown = Math.floor(Math.random() * (max - min + 1)) + min
+
+            alert(`Você ganhou um bonus de ${bonus} Social Credits! Próximo bônus em ${Math.ceil(cooldown / 1000 / 60)} minutos`)
+
+            setTimeout(() => {
+                surpriseCooldown = false
+                surprise.disabled = false
+                surprise.style.opacity = '1'
+                surprise.style.cursor = 'pointer'
+                alert('Bônus pronto novamente')
+            }, cooldown)
+        }
+    </script>
+
+</body>
+</html>
