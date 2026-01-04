@@ -20,6 +20,15 @@
             align-items: center;
             justify-content: center;
         }
+        button#resetAllButton{
+            background: #141111;
+            color: white;
+            font: normal 15pt Arial;
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+            border: 3px solid #080808;
+        }
         h2#points{
             background: #3c3c3c;
             color: white;
@@ -27,6 +36,7 @@
             border-radius: 15px;
             width: fit-content;
             padding: 15px;
+            border: 3px solid #1a1a1a;
         }
         h3#pointsPerSecond{
             background: #3c3c3c;
@@ -35,6 +45,7 @@
             border-radius: 15px;
             width: fit-content;
             padding: 15px;
+            border: 3px solid #1a1a1a;
         }
         img#sus{
             border-radius: 150px;
@@ -44,6 +55,18 @@
         img:active {
             transform: scale(0.9); /* Diminui 10% enquanto o mouse estiver apertado */
             transition: transform 0.001s;
+        }
+        button#surprise{
+            background: #141111;
+            color: white;
+            font: normal 15pt Arial;
+            border-radius: 15px;
+            width: fit-content;
+            padding: 15px;
+            border: 3px solid #080808;
+        }
+        button#surprise{
+            margin-top: 20px;
         }
         .floating-number{
             position: absolute;
@@ -64,15 +87,6 @@
             0% { transform: translateY(0); opacity: 1; }
             100% { transform: translateY(-100px); opacity: 0; }
         }
-        button#surprise{
-            background: #141111;
-            color: white;
-            font: normal 15pt Arial;
-            border-radius: 15px;
-            width: fit-content;
-            padding: 15px;
-            border: 3px solid #080808;
-        }
         div#leftSide{
 
             background: #2a2a2a;
@@ -86,9 +100,9 @@
             flex-direction: column;
         }
         div#shop {
-            background: #2a2a2a;
+            background: #1a1a1a;;
             width: fit-content;
-            height: 75vh;
+            height: 70vh;
             border-radius: 15px;
             border: 5px solid #ff4646;
             overflow-y: auto;
@@ -124,8 +138,7 @@
         .upgradeArea {
             background: #1a1a1a;
             width: 100%;
-            min-height: 100px;
-            max-height: 25vh;
+            height: 30vh;
             border-radius: 10px;
             margin-bottom: 15px;
             overflow-x: auto;
@@ -170,54 +183,50 @@
         }
         .meme-info h3, .meme-info p {
             margin: 2px 0;
-        }
-        button#surprise{
-            margin-top: 20px;
-        }
-        /* Media Query: Aplica estas regras apenas em telas com menos de 768px (celulares/tablets) */
+        } 
         @media (max-width: 768px) {
             body {
-                flex-direction: column; /* Coloca o clicker em cima e a loja embaixo */
-                overflow-y: auto;       /* Permite rolar a página para baixo */
-                height: auto;           /* Ajusta a altura para caber tudo */
+                flex-direction: column;
+                overflow-y: auto;
+                height: auto;
             }
 
             div#clickerSide {
                 width: 100%;
                 padding: 20px 0;
-                min-height: 50vh;      /* Ocupa metade da tela para o Sus */
+                min-height: 50vh;
             }
 
             div#leftSide {
-                width: 100% !important; /* Faz a loja ocupar a largura toda */
+                width: 100% !important;
                 height: auto;
-                border-radius: 20px 20px 0 0; /* Arredonda só em cima */
+                border-radius: 20px 20px 0 0;
                 border-left: none;
                 border-top: 5px solid #ff0000;
             }
 
             div#shop {
-                height: 60vh; /* Define um tamanho fixo para a loja não ficar infinita */
+                height: 60vh;
             }
 
             img#sus {
-                width: 180px; /* Diminui um pouco o tamanho do Sus no celular */
+                width: 180px;
             }
 
             .meme-card {
-                padding: 8px; /* Compacta os cards para caberem melhor */
+                padding: 8px;
             }
-}
+        }
     </style>
 </head>
 <body>
-    <button onclick="resetAllClick()">Resetar</button>
 
     <div id="clickerSide">
-    <h2 id="points">Social Credits = </h2>
-    <h3 id="pointsPerSecond">por segundo: </h3>
-    <img src="images/sus.png" alt="Sus" id="sus">
-    <button id="surprise">Surprise</button>
+        <button  id="resetAllButton" onclick="resetAllClick()">Resetar</button>
+        <h2 id="points">Social Credits = </h2>
+        <h3 id="pointsPerSecond">por segundo: </h3>
+        <img src="images/sus.png" alt="Sus" id="sus">
+        <button id="surprise">Surprise</button>
     </div>
 
     <div id="leftSide">
@@ -340,14 +349,14 @@
                 </div>
             </div>
 
-            <div class="meme-card hidden-meme" onclick="comprarMeme(10, 'harambe')">
-                <h3>Harambe</h3>
-                <img src="images/harambe.jpeg" alt="">
+            <div class="meme-card hidden-meme" onclick="comprarMeme(10, 'dat')">
+                <h3>Dat Boi</h3>
+                <img src="images/dat.jpeg" alt="">
                 <div class="meme-info">
-                    <p id="year-harambe">Ano: 2016</p>
-                    <p id="cost-harambe">Custo: 750.000.000</p>
-                    <p id="owned-harambe">Quantidade: 0</p>
-                    <p id="cps-harambe">Gera 160.000/s</p>
+                    <p id="year-dat">Ano: 2016</p>
+                    <p id="cost-dat">Custo: 750.000.000</p>
+                    <p id="owned-dat">Quantidade: 0</p>
+                    <p id="cps-dat">Gera 160.000/s</p>
                 </div>
             </div>
 
@@ -482,6 +491,7 @@
         let pontosPorSegundo = localStorage.getItem('pointsPerSecond')
         let valorClick = localStorage.getItem('valorClick')
         let clicksTotais = localStorage.getItem('clicksTotais')
+        let saveData = JSON.parse(localStorage.getItem('construçoes_save'))
         
         let clickValue = valorClick ? Number(valorClick) : 1
         let totalClicks = clicksTotais ? Number(clicksTotais) : 0
@@ -526,7 +536,20 @@
                 som: 'sounds/tralalero.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Los Tralalelitos", icone: "👶", multiplicador: 2, preco: [], descricao: "Os filhos do tralalero." },
+                    { nome: "Bombardiro Crocodilo", icone: "🐊", multiplicador: 2, preco: [], descricao: "Melhor amigo dele, embora eles briguem muito." },
+                    { nome: "Jogando Fortnite", icone: "🎮", multiplicador: 2, preco: [], descricao: "O passatempo favorito que ele usa pra passar tempo com o filho." },
+                    { nome: "Nikes Azuis", icone: "👟", multiplicador: 2, preco: [], descricao: "O par de calçados oficial dele, não sai de casa sem." },
+                    { nome: "Orcalero Orcala", icone: "🐋", multiplicador: 2, preco: [], descricao: "O primo dele, às vezes saem juntos pra nadar." },
+                    { nome: "Chá de Laranja", icone: "🍵", multiplicador: 2, preco: [], descricao: "Dizem que é o segredo da voz dele." },
+                    { nome: "Aula de Geografia", icone: "🌎", multiplicador: 2, preco: [], descricao: "Tralalero viajando o mundo todo." },
+                    { nome: "Microfone de Plástico", icone: "🎤", multiplicador: 2, preco: [], descricao: "Onde a mágica do brainrot acontece." },
+                    { nome: "Coro dos Tralalas", icone: "🎶", multiplicador: 3, preco: [], descricao: "Milhares de vozes cantando juntas." },
+                    { nome: "Brainrot God", icone: "👑", multiplicador: 5, preco: [], descricao: "A entidade máxima da confusão mental." }
+                ]
             },
 
             {
@@ -538,7 +561,20 @@
                 som: 'sounds/chillGuy.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Mãos no Bolso", icone: "🧥", multiplicador: 2, preco: [], descricao: "Nada me abala, estou apenas relaxado." },
+                    { nome: "Suéter de Malha", icone: "👕", multiplicador: 2, preco: [], descricao: "O uniforme oficial de quem não quer guerra." },
+                    { nome: "Olhar de Peixe Morto", icone: "👀", multiplicador: 2, preco: [], descricao: "0% estresse, 100% vibe." },
+                    { nome: "Low Profile", icone: "👤", multiplicador: 2, preco: [], descricao: "Viver escondido é viver melhor." },
+                    { nome: "Festa Silenciosa", icone: "🎧", multiplicador: 2, preco: [], descricao: "Curto a música, mas sem fazer barulho." },
+                    { nome: "Meditação Urbana", icone: "🧘", multiplicador: 2, preco: [], descricao: "Paz interior em meio ao caos do Twitter." },
+                    { nome: "Vibe Inquebrável", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Podem me xingar, eu continuo relaxado." },
+                    { nome: "Diploma de Tranquilidade", icone: "📜", multiplicador: 2, preco: [], descricao: "Formado em não ligar para nada." },
+                    { nome: "Aura de Calma", icone: "✨", multiplicador: 3, preco: [], descricao: "Quem chega perto de você para de chorar." },
+                    { nome: "O Deus do Zen", icone: "🌌", multiplicador: 5, preco: [], descricao: "O universo pode acabar, você estará apenas relaxando." }
+                ]
             },
 
             {
@@ -550,7 +586,20 @@
                 som: 'sounds/skibidi.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Cameraman", icone: "📷", multiplicador: 2, preco: [], descricao: "A primeira linha de defesa contra os vasos." },
+                    { nome: "Speakerman", icone: "🔊", multiplicador: 2, preco: [], descricao: "Som alto o suficiente para quebrar cerâmica." },
+                    { nome: "TV Man", icone: "📺", multiplicador: 2, preco: [], descricao: "Raio hipnotizante que faz os toilets chorarem." },
+                    { nome: "Plunger Cameraman", icone: "🪠", multiplicador: 2, preco: [], descricao: "O herói que usa desentupidores como espadas." },
+                    { nome: "Titan Cameraman", icone: "🤖", multiplicador: 2, preco: [], descricao: "Ele voltou, e está gigante." },
+                    { nome: "Titan Speakerman", icone: "🔈", multiplicador: 2, preco: [], descricao: "O ritmo da destruição em massa." },
+                    { nome: "Scientist Toilet", icone: "🔬", multiplicador: 2, preco: [], descricao: "O gênio por trás das descargas malignas." },
+                    { nome: "Astro Toilet", icone: "🚀", multiplicador: 2, preco: [], descricao: "Eles vieram do espaço... e são vasos." },
+                    { nome: "G-Man Toilet 4.0", icone: "☢️", multiplicador: 3, preco: [], descricao: "Lasers, muitos lasers!" },
+                    { nome: "Skibidi Apocalypse", icone: "🚽", multiplicador: 5, preco: [], descricao: "Não adianta mais dar descarga." }
+                ]
             },
 
             {
@@ -562,7 +611,20 @@
                 som: 'sounds/feast.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Desafio de 24h", icone: "⏳", multiplicador: 2, preco: [], descricao: "Fique parado e ganhe dinheiro." },
+                    { nome: "Beast Burger", icone: "🍔", multiplicador: 2, preco: [], descricao: "Um hambúrguer com gosto de visualizações." },
+                    { nome: "Ilha Particular", icone: "🏝️", multiplicador: 2, preco: [], descricao: "Dei uma ilha para o último que sair do círculo." },
+                    { nome: "Team Trees", icone: "🌲", multiplicador: 2, preco: [], descricao: "Plantando árvores pra limpar sua consciência." },
+                    { nome: "Squid Game Real", icone: "🦑", multiplicador: 2, preco: [], descricao: "Um jogo de vida ou morte, mas com prêmios." },
+                    { nome: "Cartão de Crédito Ilimitado", icone: "💳", multiplicador: 2, preco: [], descricao: "Comprei tudo que vi na frente." },
+                    { nome: "Beast Reacts", icone: "😲", multiplicador: 2, preco: [], descricao: "Reagindo a si mesmo ganhando dinheiro." },
+                    { nome: "100 Milhões de Inscritos", icone: "🧱", multiplicador: 2, preco: [], descricao: "A placa de platina que brilha mais que o sol." },
+                    { nome: "Filantropia Agressiva", icone: "🤝", multiplicador: 3, preco: [], descricao: "Curando o mundo um vídeo por vez." },
+                    { nome: "O Dono do YouTube", icone: "👑", multiplicador: 5, preco: [], descricao: "Mr Feast agora é a própria plataforma." }
+                ]
             },
 
             {
@@ -574,7 +636,20 @@
                 som: 'sounds/axel.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Terno Rosa", icone: "🧥", multiplicador: 2, preco: [], descricao: "Elegância pura caminhando por Harlem." },
+                    { nome: "Chapéu Vermelho", icone: "🎩", multiplicador: 2, preco: [], descricao: "O acessório que completa o drip." },
+                    { nome: "Caminhada Imponente", icone: "🚶", multiplicador: 2, preco: [], descricao: "Todos param para ver você passar." },
+                    { nome: "Loja de Mostarda", icone: "🧴", multiplicador: 2, preco: [], descricao: "Onde tudo começou." },
+                    { nome: "Assobio Contagiante", icone: "😙", multiplicador: 2, preco: [], descricao: "A trilha sonora da sua chegada." },
+                    { nome: "O Grupo de Seguidores", icone: "👥", multiplicador: 2, preco: [], descricao: "Três caras que não param de te admirar." },
+                    { nome: "Elevador de Luxo", icone: "🛗", multiplicador: 2, preco: [], descricao: "Próxima parada: O topo." },
+                    { nome: "Novos Forgees", icone: "👟", multiplicador: 2, preco: [], descricao: "I put the new Forgis on the Jeep." },
+                    { nome: "Mestre do Rebolado", icone: "🍑", multiplicador: 3, preco: [], descricao: "Física de animação avançada." },
+                    { nome: "King of Harlem", icone: "👑", multiplicador: 5, preco: [], descricao: "A cidade inteira segue seus passos." }
+                ]
             },
 
             {
@@ -586,7 +661,20 @@
                 som: 'sounds/coffinDance.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Sapato de Verniz", icone: "👞", multiplicador: 2, preco: [], descricao: "Brilhando mais que seu futuro." },
+                    { nome: "Óculos Escuros", icone: "🕶️", multiplicador: 2, preco: [], descricao: "Estilo mesmo em momentos tristes." },
+                    { nome: "Ritmo Astronomia", icone: "🎵", multiplicador: 2, preco: [], descricao: "A batida que anuncia o fim." },
+                    { nome: "Passinho Sincronizado", icone: "💃", multiplicador: 2, preco: [], descricao: "A morte nunca foi tão coreografada." },
+                    { nome: "Caixão de Ouro", icone: "⚰️", multiplicador: 2, preco: [], descricao: "Um descanso eterno com muito luxo." },
+                    { nome: "Mestre de Cerimônia", icone: "🎩", multiplicador: 2, preco: [], descricao: "O líder que guia a dança." },
+                    { nome: "Vídeo de Fail", icone: "📉", multiplicador: 2, preco: [], descricao: "Você aparece sempre que alguém faz besteira." },
+                    { nome: "Turnê Mundial", icone: "🌍", multiplicador: 2, preco: [], descricao: "Dançando em todos os continentes." },
+                    { nome: "Imortalidade Dançante", icone: "💀", multiplicador: 3, preco: [], descricao: "Nem a morte para esse groove." },
+                    { nome: "Funeral Galáctico", icone: "🌌", multiplicador: 5, preco: [], descricao: "Enterrando estrelas que explodiram." }
+                ]
             },
 
             {
@@ -598,7 +686,20 @@
                 som: 'sounds/woman-yeling-cat.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Dedo Apontado", icone: "👈", multiplicador: 2, preco: [], descricao: "A arma principal da discussão." },
+                    { nome: "Prato de Salada", icone: "🥗", multiplicador: 2, preco: [], descricao: "O jantar confuso do gato Smudge." },
+                    { nome: "Amiga Seguradora", icone: "👩‍❤️‍👩", multiplicador: 2, preco: [], descricao: "Alguém precisa te segurar nesse restaurante." },
+                    { nome: "Expressão de Confusão", icone: "🐱", multiplicador: 2, preco: [], descricao: "O gato não tem ideia do que você está falando." },
+                    { nome: "Restaurante de Luxo", icone: "🍽️", multiplicador: 2, preco: [], descricao: "O cenário perfeito para um barraco." },
+                    { nome: "Legendas Engraçadas", icone: "💬", multiplicador: 2, preco: [], descricao: "Textos que mudam o sentido da briga." },
+                    { nome: "Maquiagem Borrada", icone: "💄", multiplicador: 2, preco: [], descricao: "O drama atingiu o nível máximo." },
+                    { nome: "Meme de Duas Telas", icone: "🖼️", multiplicador: 2, preco: [], descricao: "A montagem que uniu dois mundos." },
+                    { nome: "Paz no Jantar", icone: "🕊️", multiplicador: 3, preco: [], descricao: "Finalmente fizeram as pazes (ou não)." },
+                    { nome: "Fusão Lendária", icone: "🌀", multiplicador: 5, preco: [], descricao: "O meme que nunca morre no seu feed." }
+                ]
             },
 
             {
@@ -610,7 +711,20 @@
                 som: 'sounds/knuckles.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Língua Estalada", icone: "👅", multiplicador: 2, preco: [], descricao: "O som que assombra os servidores de VR Chat." },
+                    { nome: "Procurando a Rainha", icone: "👸", multiplicador: 2, preco: [], descricao: "Você precisa encontrar a rainha para saber o caminho." },
+                    { nome: "Guerreiro da Tribo", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Um exército de Knuckles vermelhos e deformados." },
+                    { nome: "Ebola Espiritual", icone: "🦠", multiplicador: 2, preco: [], descricao: "Um clássico pesado de 2018." },
+                    { nome: "O Caminho (The Way)", icone: "🛣️", multiplicador: 2, preco: [], descricao: "Finalmente, você descobriu para onde todos estão indo." },
+                    { nome: "Knuckles Gigante", icone: "👹", multiplicador: 2, preco: [], descricao: "Ele é grande, ele é vermelho, ele estala." },
+                    { nome: "Cosplay de Sonic", icone: "🦔", multiplicador: 2, preco: [], descricao: "Uma tentativa falha de parecer o ouriço original." },
+                    { nome: "Comunidade VR", icone: "👓", multiplicador: 2, preco: [], descricao: "Infiltrando-se em todos os mundos virtuais." },
+                    { nome: "Canto Tribal", icone: "🗣️", multiplicador: 3, preco: [], descricao: "O som de mil estalos ao mesmo tempo." },
+                    { nome: "Deus de Uganda", icone: "✨", multiplicador: 5, preco: [], descricao: "Você agora é a própria Rainha." }
+                ]
             },
 
             {
@@ -622,20 +736,46 @@
                 som: 'sounds/distractedBF.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Camisa Azul Clássica", icone: "👕", multiplicador: 2, preco: [], descricao: "O uniforme oficial da traição visual." },
+                    { nome: "A Garota de Vermelho", icone: "💃", multiplicador: 2, preco: [], descricao: "O novo interesse que estragou o passeio." },
+                    { nome: "Namorada Chocada", icone: "😮", multiplicador: 2, preco: [], descricao: "Aquela cara de quem não está acreditando no que viu." },
+                    { nome: "Banco de Imagens", icone: "📷", multiplicador: 2, preco: [], descricao: "De onde saem as fotos mais aleatórias do mundo." },
+                    { nome: "Triângulo Amoroso", icone: "📐", multiplicador: 2, preco: [], descricao: "A geometria perfeita do entretenimento." },
+                    { nome: "Legendas Virais", icone: "💬", multiplicador: 2, preco: [], descricao: "Qualquer texto fica engraçado nessa imagem." },
+                    { nome: "Cena de Ciúmes", icone: "💢", multiplicador: 2, preco: [], descricao: "A briga que gerou milhões de curtidas." },
+                    { nome: "O Multiverso das Fotos", icone: "🌌", multiplicador: 2, preco: [], descricao: "Existem outras 50 fotos desse casal no Google." },
+                    { nome: "Fidelidade Zero", icone: "🚫", multiplicador: 3, preco: [], descricao: "Sempre olhando para o próximo meme." },
+                    { nome: "Mestre do Contexto", icone: "👑", multiplicador: 5, preco: [], descricao: "Você agora consegue explicar qualquer situação com uma foto." }
+                ]
             },
 
 
             {
-                id: 'harambe',
-                nome: 'Harambe',
+                id: 'dat',
+                nome: 'Dat Boi',
                 ano: 2016,
                 custo: 750000000,
                 cps: 160000,
-                som: 'sounds/harambe.mp3',
+                som: 'sounds/dat.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Monociclo de Prata", icone: "🚲", multiplicador: 2, preco: [], descricao: "Equilíbrio perfeito sobre uma roda só." },
+                    { nome: "O Shit Waddup!", icone: "🐸", multiplicador: 2, preco: [], descricao: "A saudação oficial de 2016." },
+                    { nome: "Sapo Verde-Limão", icone: "🦎", multiplicador: 2, preco: [], descricao: "O anfíbio mais estiloso da internet." },
+                    { nome: "Passeio no Parque", icone: "🌳", multiplicador: 2, preco: [], descricao: "Aqui vem ele!" },
+                    { nome: "Animação 3D Retrô", icone: "💻", multiplicador: 2, preco: [], descricao: "Gráficos que só o início dos anos 2000 explica." },
+                    { nome: "Acompanhante de Monociclo", icone: "👥", multiplicador: 2, preco: [], descricao: "Uma legião de sapos vindo em sua direção." },
+                    { nome: "Física Desafiada", icone: "🌪️", multiplicador: 2, preco: [], descricao: "Pedalando no ar e no vácuo." },
+                    { nome: "Meme de Transição", icone: "🔜", multiplicador: 2, preco: [], descricao: "Ele aparece quando você menos espera." },
+                    { nome: "Embaixador de 2016", icone: "🏅", multiplicador: 3, preco: [], descricao: "Representando o ano mais louco dos memes." },
+                    { nome: "The Boy Supreme", icone: "🌌", multiplicador: 5, preco: [], descricao: "Ele chegou, e ele é eterno." }
+                ]
             },
 
             {
@@ -647,7 +787,20 @@
                 som: 'sounds/john.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "O Boné Invisível", icone: "🧢", multiplicador: 2, preco: [], descricao: "Você não pode me ver!" },
+                    { nome: "Bing Chilling", icone: "🍦", multiplicador: 2, preco: [], descricao: "Sorvete e mandarim: a combinação inesperada." },
+                    { nome: "Tema de Entrada", icone: "🎺", multiplicador: 2, preco: [], descricao: "TAN-TAN-TAN-TAAAAAN! O som que estoura os ouvidos." },
+                    { nome: "Ajuste de Atitude", icone: "💪", multiplicador: 2, preco: [], descricao: "O golpe final que ninguém vê chegando." },
+                    { nome: "Camuflagem Total", icone: "👻", multiplicador: 2, preco: [], descricao: "As pessoas acham que estão sozinhas na sala." },
+                    { nome: "John Cena da Paz", icone: "🕊️", multiplicador: 2, preco: [], descricao: "Fazendo diplomacia enquanto ninguém te vê." },
+                    { nome: "Mestre do Meme Surpresa", icone: "❗", multiplicador: 2, preco: [], descricao: "Aparecendo nos vídeos mais aleatórios da internet." },
+                    { nome: "Social Credits", icone: "🇨🇳", multiplicador: 2, preco: [], descricao: "+1000 créditos para o seu perfil." },
+                    { nome: "Invisibilidade Atômica", icone: "⚛️", multiplicador: 3, preco: [], descricao: "Você se tornou uma lenda urbana." },
+                    { nome: "The Invisible God", icone: "👁️‍🗨️", multiplicador: 5, preco: [], descricao: "O maior campeão que ninguém nunca viu." }
+                ]
             },
 
             {
@@ -659,7 +812,20 @@
                 som: 'sounds/kermit.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Chá da Verdade", icone: "🍵", multiplicador: 2, preco: [], descricao: "Mas isso não é da minha conta..." },
+                    { nome: "Evil Kermit", icone: "🥷", multiplicador: 2, preco: [], descricao: "O capuz preto que te manda fazer besteira." },
+                    { nome: "Banjo do Pântano", icone: "🪕", multiplicador: 2, preco: [], descricao: "Uma melodia triste e relaxante." },
+                    { nome: "O Grito Agudo", icone: "😱", multiplicador: 2, preco: [], descricao: "YAAAAAAAY! As mãos balançando freneticamente." },
+                    { nome: "Janela Chuvosa", icone: "🌧️", multiplicador: 2, preco: [], descricao: "Momento reflexivo de um sapo triste." },
+                    { nome: "Dilema Interno", icone: "🧠", multiplicador: 2, preco: [], descricao: "Eu vs Eu mesmo (de capuz)." },
+                    { nome: "Miss Piggy", icone: "🐷", multiplicador: 2, preco: [], descricao: "Um relacionamento explosivo e lucrativo." },
+                    { nome: "Sapo de Repórter", icone: "🎤", multiplicador: 2, preco: [], descricao: "Trazendo as notícias mais absurdas do dia." },
+                    { nome: "Voz de Taquara Rachada", icone: "📻", multiplicador: 3, preco: [], descricao: "Um timbre inconfundível." },
+                    { nome: "Entidade dos Muppets", icone: "🎭", multiplicador: 5, preco: [], descricao: "O rei do pântano e dos memes sarcásticos." }
+                ]
             },
 
             {
@@ -671,7 +837,20 @@
                 som: 'sounds/doge.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Much Wow", icone: "🐕", multiplicador: 2, preco: [], descricao: "Tanta surpresa. Muito clique." },
+                    { nome: "Very Currency", icone: "🪙", multiplicador: 2, preco: [], descricao: "A moeda que vale o que você acredita." },
+                    { nome: "Doge de Pelúcia", icone: "🧸", multiplicador: 2, preco: [], descricao: "Tão fofinho, muito abraço." },
+                    { nome: "Shiba Realista", icone: "🐕‍🦺", multiplicador: 2, preco: [], descricao: "O cachorro original que começou tudo." },
+                    { nome: "Meme de 2013", icone: "📜", multiplicador: 2, preco: [], descricao: "Um clássico da era de ouro." },
+                    { nome: "Bonk!", icone: "🔨", multiplicador: 2, preco: [], descricao: "Mande os inimigos para a 'horny jail'." },
+                    { nome: "Doge Elon Musk", icone: "🚀", multiplicador: 2, preco: [], descricao: "Indo para a lua!" },
+                    { nome: "Cheems (Irmão)", icone: "🍔", multiplicador: 2, preco: [], descricao: "Dor e sofrimento em forma de dogue." },
+                    { nome: "Doge da Galáxia", icone: "🌌", multiplicador: 3, preco: [], descricao: "O universo é feito de 'wows'." },
+                    { nome: "To The Moon!", icone: "🌕", multiplicador: 5, preco: [], descricao: "O Doge finalmente chegou lá." }
+                ]
             },
 
             {
@@ -683,7 +862,20 @@
                 som: 'sounds/gangnam.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Oppa Gangnam Style!", icone: "🕶️", multiplicador: 2, preco: [], descricao: "A frase que mudou o algoritmo pra sempre." },
+                    { nome: "Dança do Cavalo", icone: "🐎", multiplicador: 2, preco: [], descricao: "O passo que todo mundo tentou fazer em 2012." },
+                    { nome: "Elevador do Grito", icone: "🛗", multiplicador: 2, preco: [], descricao: "Aquela cena clássica que ninguém esquece." },
+                    { nome: "Terno Azul Turquesa", icone: "🧥", multiplicador: 2, preco: [], descricao: "Ousadia e alegria na moda coreana." },
+                    { nome: "1 Bilhão de Views", icone: "📈", multiplicador: 2, preco: [], descricao: "O primeiro vídeo a quebrar o contador do YouTube." },
+                    { nome: "Explosão no Estacionamento", icone: "💥", multiplicador: 2, preco: [], descricao: "Tudo voando enquanto você dança." },
+                    { nome: "Flashmob na Praça", icone: "👥", multiplicador: 2, preco: [], descricao: "Milhares de pessoas fazendo o passo do cavalo." },
+                    { nome: "PSY Original", icone: "🎤", multiplicador: 2, preco: [], descricao: "O homem, a lenda, o k-pop raiz." },
+                    { nome: "Quebra-Contador", icone: "🛠️", multiplicador: 3, preco: [], descricao: "O código do YouTube teve que ser reescrito por sua causa." },
+                    { nome: "Deus do Viral", icone: "👑", multiplicador: 5, preco: [], descricao: "O criador da era moderna dos hits de internet." }
+                ]
             },
 
             {
@@ -695,7 +887,20 @@
                 som: 'sounds/nyan.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Torrada de Morango", icone: "🍓", multiplicador: 2, preco: [], descricao: "O corpo perfeito para um gato espacial." },
+                    { nome: "Rastro de Arco-Íris", icone: "🌈", multiplicador: 2, preco: [], descricao: "Deixando um rastro colorido pelo vácuo." },
+                    { nome: "Som 8-bit", icone: "👾", multiplicador: 2, preco: [], descricao: "Nyanyanyanyanyanyanya!" },
+                    { nome: "Loop de 24 Horas", icone: "🔁", multiplicador: 2, preco: [], descricao: "Desafio de resistência mental extrema." },
+                    { nome: "Gravidade Zero", icone: "👨‍🚀", multiplicador: 2, preco: [], descricao: "Flutuando no ritmo da música." },
+                    { nome: "Planeta Docinho", icone: "🍩", multiplicador: 2, preco: [], descricao: "Uma parada para lanchar entre as estrelas." },
+                    { nome: "Estrela Cadente", icone: "🌠", multiplicador: 2, preco: [], descricao: "Faça um pedido ao ver o gato passar." },
+                    { nome: "Nyan Dog (Inimigo)", icone: "🐶", multiplicador: 2, preco: [], descricao: "O rival que também quer brilhar." },
+                    { nome: "Galáxia Colorida", icone: "🌌", multiplicador: 3, preco: [], descricao: "O universo agora é feito de arco-íris." },
+                    { nome: "Entidade Pop-Tart", icone: "👑", multiplicador: 5, preco: [], descricao: "O deus supremo do rastro infinito." }
+                ]
             },
 
             {
@@ -707,7 +912,20 @@
                 som: 'sounds/troll.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Rage Comics", icone: "📖", multiplicador: 2, preco: [], descricao: "Onde tudo começou nos fóruns antigos." },
+                    { nome: "Problem?", icone: "😏", multiplicador: 2, preco: [], descricao: "A pergunta que destrói qualquer argumento." },
+                    { nome: "U Mad Bro?", icone: "😤", multiplicador: 2, preco: [], descricao: "A arte de irritar pessoas na internet." },
+                    { nome: "Lógica do Imã", icone: "🧲", multiplicador: 2, preco: [], descricao: "Energia infinita usando apenas dois imãs." },
+                    { nome: "Óleo Flutua na Água", icone: "🛢️", multiplicador: 2, preco: [], descricao: "1. Espere chover. 2. Cubra-se de óleo. 3. Voe." },
+                    { nome: "Troll Science", icone: "🧪", multiplicador: 2, preco: [], descricao: "Física que não faz sentido, mas funciona." },
+                    { nome: "Máscara de Plástico", icone: "🎭", multiplicador: 2, preco: [], descricao: "O disfarce perfeito para o caos." },
+                    { nome: "Exército de Clones", icone: "👥", multiplicador: 2, preco: [], descricao: "O mundo inteiro agora tem o mesmo sorriso." },
+                    { nome: "Le Fuuuu", icone: "🔥", multiplicador: 3, preco: [], descricao: "A fúria máxima do meme clássico." },
+                    { nome: "O Incidente do Vazio", icone: "🌑", multiplicador: 5, preco: [], descricao: "Ninguém está a salvo do troll final." }
+                ]
             },
 
             {
@@ -719,7 +937,20 @@
                 som: 'sounds/keyboardCat.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Piano Casio", icone: "🎹", multiplicador: 2, preco: [], descricao: "O instrumento oficial do mestre felino." },
+                    { nome: "Camiseta Azul", icone: "👕", multiplicador: 2, preco: [], descricao: "O figurino clássico do vídeo de 1984." },
+                    { nome: "Play Him Off!", icone: "🎵", multiplicador: 2, preco: [], descricao: "Sempre que alguém falha, você toca." },
+                    { nome: "Patas Ágeis", icone: "🐾", multiplicador: 2, preco: [], descricao: "A velocidade da música aumenta o lucro." },
+                    { nome: "Vídeo em VHS", icone: "📼", multiplicador: 2, preco: [], descricao: "Qualidade de imagem de antigamente." },
+                    { nome: "Show de Talentos", icone: "🌟", multiplicador: 2, preco: [], descricao: "O gato que conquistou a TV e a Web." },
+                    { nome: "Sinfonia Felina", icone: "🎼", multiplicador: 2, preco: [], descricao: "Uma orquestra inteira tocando o tema." },
+                    { nome: "Mestre do Jazz", icone: "🎷", multiplicador: 2, preco: [], descricao: "Improviso puro no teclado." },
+                    { nome: "Pianista Imortal", icone: "👻", multiplicador: 3, preco: [], descricao: "Mesmo após décadas, a música continua." },
+                    { nome: "Mozart dos Memes", icone: "👑", multiplicador: 5, preco: [], descricao: "A maior composição da história da internet." }
+                ]
             },
 
             {
@@ -731,7 +962,20 @@
                 som: 'sounds/dramatic.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "O Olhar Fixo", icone: "👀", multiplicador: 2, preco: [], descricao: "Aquele giro de cabeça dramático." },
+                    { nome: "Zoom Dramático", icone: "🔍", multiplicador: 2, preco: [], descricao: "O foco que aumenta a tensão." },
+                    { nome: "Trilha de Suspense", icone: "🎼", multiplicador: 2, preco: [], descricao: "Dun-dun-duuuuuun!" },
+                    { nome: "Esquilo da Pradaria", icone: "🐿️", multiplicador: 2, preco: [], descricao: "Na verdade, ele não é um chipmunk." },
+                    { nome: "Contrato em Hollywood", icone: "🎬", multiplicador: 2, preco: [], descricao: "O melhor ator de suspense da geração." },
+                    { nome: "Close de Rosto", icone: "📷", multiplicador: 2, preco: [], descricao: "Cada detalhe da expressão importa." },
+                    { nome: "Câmera Lenta", icone: "🎞️", multiplicador: 2, preco: [], descricao: "Aumentando o drama por segundo." },
+                    { nome: "Vilão de Novela", icone: "😈", multiplicador: 2, preco: [], descricao: "Ele sabe o seu segredo." },
+                    { nome: "Revelação Chocante", icone: "💥", multiplicador: 3, preco: [], descricao: "O plot twist que ninguém esperava." },
+                    { nome: "O Observador Eterno", icone: "👁️", multiplicador: 5, preco: [], descricao: "Ele está sempre te julgando." }
+                ]
             },
 
             {
@@ -743,7 +987,20 @@
                 som: 'sounds/rick.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Microfone de Prata", icone: "🎤", multiplicador: 2, preco: [], descricao: "Nunca vai te dar, nunca vai te deixar." },
+                    { nome: "Terno de 1987", icone: "🧥", multiplicador: 2, preco: [], descricao: "Estilo imortal dos anos 80." },
+                    { nome: "Link Disfarçado", icone: "🔗", multiplicador: 2, preco: [], descricao: "Você achou que era um vídeo de tutorial..." },
+                    { nome: "O Passinho do Rick", icone: "🕺", multiplicador: 2, preco: [], descricao: "Impossível não dançar junto." },
+                    { nome: "Never Gonna Give You Up", icone: "💿", multiplicador: 2, preco: [], descricao: "O hino oficial da internet." },
+                    { nome: "QR Code Maldito", icone: "📱", multiplicador: 2, preco: [], descricao: "Escaneou, dançou." },
+                    { nome: "Barbeiro do Rick", icone: "✂️", multiplicador: 2, preco: [], descricao: "Aquele topete não se mantém sozinho." },
+                    { nome: "Exército Troll", icone: "👥", multiplicador: 2, preco: [], descricao: "Milhões de pessoas caindo no bait ao mesmo tempo." },
+                    { nome: "Disco de Diamante", icone: "💎", multiplicador: 3, preco: [], descricao: "O troll mais bem sucedido da história." },
+                    { nome: "Entidade Astley", icone: "😇", multiplicador: 5, preco: [], descricao: "Ele nunca vai desistir de você." }
+                ]
             },
 
             {
@@ -755,7 +1012,20 @@
                 som: 'sounds/surprise.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Sargento Doakes", icone: "👮", multiplicador: 2, preco: [], descricao: "Sempre desconfiado do Dexter." },
+                    { nome: "Surprise!", icone: "❗", multiplicador: 2, preco: [], descricao: "Onde você menos espera, ele aparece." },
+                    { nome: "Rimas Engraçadas", icone: "🎤", multiplicador: 2, preco: [], descricao: "Sunrise, Fries, Heart eyes, Motherfucker!" },
+                    { nome: "Porta Arrombada", icone: "🚪", multiplicador: 2, preco: [], descricao: "Ele não pede licença para entrar." },
+                    { nome: "Olhar de Poucos Amigos", icone: "😡", multiplicador: 2, preco: [], descricao: "Ele sabe que você fez algo errado." },
+                    { nome: "Meme de Reação", icone: "🖼️", multiplicador: 2, preco: [], descricao: "Perfeito para qualquer post surpresa." },
+                    { nome: "Infiltração Tática", icone: "🥷", multiplicador: 2, preco: [], descricao: "Escondido no teto ou embaixo da mesa." },
+                    { nome: "Grito de Guerra", icone: "🗣️", multiplicador: 2, preco: [], descricao: "O som que faz todos pularem da cadeira." },
+                    { nome: "Onipresença", icone: "🌎", multiplicador: 3, preco: [], descricao: "Ele está em todos os lugares ao mesmo tempo." },
+                    { nome: "The Ultimate Surprise", icone: "🎆", multiplicador: 5, preco: [], descricao: "Você nunca vai vê-lo chegar." }
+                ]
             },
 
             {
@@ -767,22 +1037,55 @@
                 som: 'sounds/leroy.mp3',
                 quantidade: 0,
                 multiplier: 0,
-                multiplierMax: 10
+                multiplierMax: 10,
+                naLoja: false,
+                upgradesPersonalizados: [
+                    { nome: "Prato de Frango", icone: "🍗", multiplicador: 2, preco: [], descricao: "Pelo menos eu tenho frango!" },
+                    { nome: "Plano de Ataque", icone: "📝", multiplicador: 2, preco: [], descricao: "Cálculos matemáticos de sobrevivência (32.33%)." },
+                    { nome: "Grito Lendário", icone: "🗣️", multiplicador: 2, preco: [], descricao: "LEEEEROOOOY JEEEEKIIINS!" },
+                    { nome: "Raid Wipe", icone: "💀", multiplicador: 2, preco: [], descricao: "Todo mundo morreu, mas valeu a pena." },
+                    { nome: "Armadura de Paladino", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Brilhante e pronta para a confusão." },
+                    { nome: "Carga Imprudente", icone: "🏃", multiplicador: 2, preco: [], descricao: "Correndo direto para o perigo." },
+                    { nome: "World of Warcraft", icone: "⚔️", multiplicador: 2, preco: [], descricao: "O jogo que criou a lenda." },
+                    { nome: "Guilda dos Loucos", icone: "👥", multiplicador: 2, preco: [], descricao: "Seguindo o líder mais burro e corajoso." },
+                    { nome: "Paciência Zero", icone: "🚫", multiplicador: 3, preco: [], descricao: "Cansado de esperar a estratégia." },
+                    { nome: "Herói da Aliança", icone: "🏆", multiplicador: 5, preco: [], descricao: "O maior desastre que virou vitória." }
+                ]
             }
 
         ]
 
-        let quantidade = localStorage.getItem('quantidades')
-
-        if(quantidade){
-            let amount = JSON.parse(quantidade)
-            amount.forEach((amount, index) => {
-                if(construçoes[index]){
-                    construçoes[index].quantidade = amount
-                    construçoes[index].custo = Math.ceil(construçoes[index].custo * Math.pow(1.15, amount))
+        function gerarPrecosUpgrades(){
+            console.log("Iniciando geração de preços...");
+            construçoes.forEach(meme => {
+                console.log(`Processando ${meme.nome}: upgradesPersonalizados existe? ${!!meme.upgradesPersonalizados}`);
+                if (meme.upgradesPersonalizados) {
+                    meme.upgradesPersonalizados.forEach((upgrade, i) => {
+                        upgrade.preco = Math.floor(meme.custo * 10 * Math.pow(1.5, i));
+                        console.log(`  Upgrade ${i} (${upgrade.nome}): preço = ${upgrade.preco}`);
+                    });
                 }
-            })
+            });
+            console.log("Geração de preços concluída.");
         }
+
+        gerarPrecosUpgrades()
+
+        if (saveData) {
+            construçoes.forEach((meme, index) => {
+                if (saveData[index]) {
+                    meme.quantidade = saveData[index].quantidade || 0;
+                    meme.multiplier = saveData[index].multiplier || 0;
+                    meme.custo = saveData[index].custo || meme.custo;
+            
+                    if (meme.multiplier > 0) {
+                        for (let i = 0; i < meme.multiplier; i++) {
+                            meme.cps *= meme.upgradesPersonalizados[i].multiplicador;
+                        }
+                    }
+                }
+            });
+}
 
         function resetAllClick(){
             let confirmacao1 = confirm(`Você tem certeza? Seus ${formatarGrande(points)} vão sumir!`)
@@ -929,25 +1232,13 @@
                 };
                 audioMeme.play().catch(e => console.log("Erro ao tocar:", e));
 
-                if(meme.quantidade == 5 && meme.multiplier < 1) criarUpgradeMeme('📄', 'Certificado de Viral', 2, 1000) //2
+                let metas = [5, 10, 25, 50, 100, 250, 500, 1000, 1250, 1500];
 
-                if(meme.quantidade == 10 && meme.multiplier < 2) criarUpgradeMeme('🎤', 'Entrevista no Podpah', 2, 2500) //4
-
-                if(meme.quantidade == 25 && meme.multiplier < 3) criarUpgradeMeme('⚡', 'Edição de Status', 2, 5000) //8
-
-                if(meme.quantidade == 50 && meme.multiplier < 4) criarUpgradeMeme('🎭', 'Filtro do TikTok', 2, 7500) //16
-
-                if(meme.quantidade == 100 && meme.multiplier < 5) criarUpgradeMeme('💎', 'Versão Remasterizada', 2, 10000) //32
-
-                if(meme.quantidade == 250 && meme.multiplier < 6) criarUpgradeMeme('🌎', 'Dominação Global', 2, 15000) //64
-
-                if(meme.quantidade == 500 && meme.multiplier < 7) criarUpgradeMeme('🧠', 'Conhecimento Ancestral', 2, 30000) //128
-
-                if(meme.quantidade == 1000 && meme.multiplier < 8) criarUpgradeMeme('🌌', 'Meme Atemporal', 2, 75000) //256
-
-                if(meme.quantidade == 1250 && meme.multiplier < 9) criarUpgradeMeme('🛐', 'Religião da Internet', 2, 100000) //512
-
-                if(meme.quantidade == 1500 && meme.multiplier < 10) criarUpgradeMeme('🧬', 'Ascensão Transcendental', 2, 500000) //1024
+                if (meme.upgradesPersonalizados && meme.multiplier < 10 && meme.quantidade >= metas[meme.multiplier] && !meme.naLoja) {
+                    meme.naLoja = true
+                    let infoUpgrade = meme.upgradesPersonalizados[meme.multiplier];
+                    criarUpgradeMeme(infoUpgrade, meme);
+                }
 
                 if (index == 0 && idPrefixo == 'reset'){
                     points = Infinity
@@ -960,53 +1251,82 @@
 
                 pointManager.innerHTML = `Social Credits = ${formatarGrande(points)}`
             }
-            else {
+            else{
                 somNope.play()
             }
             
             
         }
 
-        function criarUpgradeMeme(icon, name, Multiplier, cost){
-            let area = document.getElementById('upgradeArea')
+        function criarUpgradeMeme(info, meme){
+            let upgradeBtn = document.createElement('button');
+            upgradeBtn.className = 'upgrade-btn'
 
-            if (area.innerText.includes(name)) return
+            let corPrincipal = "blue";
+            let sombra = "0 0 15px blue";
+            let nivel = meme.multiplier;
 
-            let upgradeBtn = document.createElement('div')
+            if (nivel >= 3 && nivel <= 5) {
+                corPrincipal = "purple";
+                sombra = "0 0 15px purple";
+            } else if (nivel >= 6 && nivel <= 8) {
+                corPrincipal = "darkred";
+                sombra = "0 0 15px red";
+            } else if (nivel === 9) {
+                corPrincipal = "gold";
+                sombra = "0 0 25px orange";
+                upgradeBtn.style.color = "black";
+            }
+    
+            upgradeBtn.innerHTML = `
+                <div style="font-size: 25pt; margin-right: 15px;">${info.icone}</div>
+                <div style="text-align: left; line-height: 1.2;">
+                    <strong style="font-size: 14pt;">${info.nome}</strong><br>
+                    <small style="font-size: 9pt; opacity: 0.8;">${info.descricao}</small><br>
+                    <span style="font-weight: bold; color: ${nivel === 9 ? 'black' : '#00ff00'};">
+                        Preço: ${info.preco.toLocaleString()} SC
+                    </span>
+                </div>
+            `
+
             upgradeBtn.style.cssText = `
-                width: 50px;
-                height: 50px;
-                background-color: blue;
+                min-width: 280px;
+                width: fit-content;
+                height: auto;
+                padding: 15px;
+                background-color: ${corPrincipal};
+                color: ${nivel === 9 ? 'black' : 'white'};
                 border-radius: 10px;
                 cursor: pointer;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
                 border: 2px solid white;
-                font-size: 20px;
-                box-shadow: 0 0 10px blue;
+                box-shadow: ${sombra};
+                margin: 10px;
+                transition: 0.3s;
+                font-family: Arial, sans-serif;
             `
 
-            upgradeBtn.innerHTML = icon
-            upgradeBtn.title = `${name}: Cliques valem ${Multiplier}! Custo: ${cost}`
-
             upgradeBtn.onclick = function() {
-                if (points >= cost && meme.multiplier < meme.multiplierMax) {
-                    points -= cost
-                    meme.cps *= Multiplier
-                    meme.multiplier += 1
-
-                    localStorage.setItem('multiplicador', meme.multiplier)
-
-                    area.removeChild(upgradeBtn)
-                    pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
-                }
+                if (points >= info.preco) {
+                    points -= info.preco
+            
+                    meme.naLoja = false
+                    meme.cps *= info.multiplicador
+                    meme.multiplier++
+                    
+                    pointManager.innerHTML = `Social Credits: ${formatarGrande(pointsPerSecond)}`
+                    ppsManager.innerHTML = `por segundo: ${formatarGrande(pointsPerSecond)}`
+                    upgradeBtn.remove()
+            
+                } 
                 else {
-                    somNope.play()
+                    alert("Social Credits insuficientes!")
                 }
             }
 
-            area.appendChild(upgradeBtn)
+            document.getElementById('upgradeArea').appendChild(upgradeBtn)
 
         }
 
@@ -1051,8 +1371,8 @@
             localStorage.setItem('pontos', points)
             localStorage.setItem('pontosPorSegundo', pointsPerSecond)
             localStorage.setItem('valorClick', clickValue)
-            localStorage.setItem('clicksTotais', totalClicks);
-            localStorage.setItem('quantidades', JSON.stringify(construçoes.map(c => c.quantidade)))
+            localStorage.setItem('clicksTotais', totalClicks)
+            localStorage.setItem('construçoes_save', JSON.stringify(construçoes))
 
         }, 999)
 
