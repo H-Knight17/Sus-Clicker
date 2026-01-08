@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sus Clicker - Clicks = </title>
+    <title>Sus Clicker</title>
     <style>
         body{
             background-color: #141414;
@@ -13,1417 +13,492 @@
             height: 100vh;
             overflow: hidden;
         }
-        div#clickerSide{
-            flex: 1; /* Faz o lado do clicker ocupar todo o espaço que sobrar */
+        .container{
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            gap: 20px;
+        }
+        #leftSide{
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
-        button#resetAllButton{
-            background: #141111;
-            color: white;
-            font: normal 15pt Arial;
-            border-radius: 15px;
-            width: fit-content;
-            padding: 15px;
-            border: 3px solid #080808;
-        }
-        h2#points{
-            background: #3c3c3c;
-            color: white;
-            font: normal 20pt Arial;
-            border-radius: 15px;
-            width: fit-content;
-            padding: 15px;
-            border: 3px solid #1a1a1a;
-        }
-        h3#pointsPerSecond{
-            background: #3c3c3c;
-            color: white;
-            font: normal 20pt Arial;
-            border-radius: 15px;
-            width: fit-content;
-            padding: 15px;
-            border: 3px solid #1a1a1a;
-        }
-        img#sus{
-            border-radius: 150px;
-            border: 3px solid #080808 ;
-            cursor: pointer;
-        }
-        img:active {
-            transform: scale(0.9); /* Diminui 10% enquanto o mouse estiver apertado */
-            transition: transform 0.001s;
-        }
-        button#surprise{
-            background: #141111;
-            color: white;
-            font: normal 15pt Arial;
-            border-radius: 15px;
-            width: fit-content;
-            padding: 15px;
-            border: 3px solid #080808;
-        }
-        button#surprise{
-            margin-top: 20px;
-        }
-        .floating-number{
-            position: absolute;
-            color: white;
-            text-shadow: 0 0 10px white;
-            text-shadow: 
-                -1px -2px 0 #000,  
-                1px -2px 0 #000,
-                -1px  2px 0 #000,
-                1px  2px 0 #000;
-            font-weight: bold;
-            font-size: 20pt;
-            pointer-events: none;
-            animation: floatUp 0.8s ease-out forwards;
-            z-index: 100;
-        }
-        @keyframes floatUp{
-            0% { transform: translateY(0); opacity: 1; }
-            100% { transform: translateY(-100px); opacity: 0; }
-        }
-        div#leftSide{
-
-            background: #2a2a2a;
-            width: 400px;
-            height: 95vh;
-            border-radius: 15px;
-            border-top: 5px solid #ff0000;
-            border-left: 5px solid #ff0000;
-            padding: 15px;
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-        }
-        div#shop {
-            background: #1a1a1a;;
-            width: fit-content;
-            height: 75vh;
-            border-radius: 15px;
-            border: 5px solid #ff4646;
-            overflow-y: auto;
-            padding: 15px;
-        }
-        .titleShop, .titleUpgrade{
-            color: white;
-            font-family: 'Arial Black', sans-serif;
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 20px;
-
-            min-height: 30px; 
-            width: 100%;
-    
-            transition: all 0.3s ease;
-        }
-        .titleShop::after, .titleUpgrade::after {
-            content: '';
-        }
-        .titleShop:hover::after{
-            content: 'Loja';
+        #pointsManager{
+            background: #494949;
             font: normal 20pt Arial;
             color: white;
-            text-shadow: 0 0 20px white;
-        }
-        .titleUpgrade:hover::after{
-            content: 'Upgrades';
-            font: normal 20pt Arial;
-            color: white;
-            text-shadow: 0 0 20px  white;
-        }
-        .upgradeArea {
-            background: #1a1a1a;
-            width: 100%;
-            height: 25vh;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            overflow-x: auto;
-            overflow-y: auto;
-            justify-content: center;
-            align-content: center;
-            align-items: center;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
             padding: 10px;
-            box-sizing: border-box;
+            border-radius: 15px;
+            border: 2.5px solid gray;
+        }
+        #ppsManager{
+            background: #494949;
+            font: normal 20pt Arial;
+            color: white;
+            padding: 10px;
+            border-radius: 15px;
+            border: 2.5px solid gray;
+        }
+        #sus{
+            border-radius: 150px;
+            border: 4px solid black;
+            transition: 0.25s;
+        }
+        #sus:active{
+            transform: scale(0.75);
+        }
+        #rightSide{
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            align-content: center;
+            background: #1b1b1b;
+            border-top: 3px solid red;
+            border-left: 3px solid red;
+            border-radius: 15px;
+            max-width: 42%;
+            height: 100vh;
+            gap: 20px;
+        }
+        .titleLoja{
+            font: normal 25pt Arial;
+            color: white;
+            opacity: 0;
+            transition: 1s;
+        }
+        .titleUpgrades{
+            font: normal 20pt Arial;
+            color: white;
+            opacity: 0;
+            transition: 1s;
+        }
+        .titleLoja:hover{
+            font: normal 25pt Arial;
+            color: white;
+            opacity: 1;
+        }
+        .titleUpgrades:hover{
+            font: normal 20pt Arial;
+            color: white;
+            opacity: 1;
+        }
+        #upgrades, #loja{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #2b2b2b;
+            border-radius: 15px;
+            margin-left: 0;
+            overflow-y: auto;
+        }
+        #loja{
+            width: 90%;
+            height: 70%;
+            border: 2px solid #ff4646;
+        }
+        #upgrades{
+            width: 75%;
+            height: 30%;
             border: 2px dashed #ff4646;
         }
-        .meme-card {
-            background: #545454;
-            margin-bottom: 10px;
-            padding: 10px;
-            border-radius: 15px;
-            cursor: pointer;
-            border: 3px solid #000096;
-            color: white;
-            display: flex; 
+        .meme-card, .reset-card{
+            display: flex;
             align-items: center;
-            gap: 15px;
-            transition: all 0.35s ease;
+            width: 80%;
+            background: #252525;
+            padding: 20px;
+            margin-top: 10px;
+            border: 2px solid #18189b;
+            border-radius: 12px;
+            transition: 0.3s;
+            cursor: pointer;
+            font: normal 15pt Arial;
+            color: white;
         }
+            
         .meme-card:hover{
-            border: 3px solid #2424ff;
+            border: 2px solid #2727f3;
             box-shadow: 0 0 3px #2424ff;
             transform: scale(1.02);
         }
-        .hidden-meme{
-            display: none !important;
+        .reset-card:hover{
+            border: 2px solid gold;
+            box-shadow: 0 0 3px #ffdd1a;
+            transform: scale(1.02);
         }
-        .meme-card img {
-            width: 80px;
-            height: 80px;
+        .memeImage{
+            width: 145px;
+            height: 105px;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 15px;
+            border: 2px solid black;
         }
-        .meme-info {
+        .meme-info{
             display: flex;
             flex-direction: column;
+            text-align: left;
         }
-        .meme-info h3, .meme-info p {
+        .meme-info p{
             margin: 2px 0;
-        } 
-        @media (max-width: 768px) {
-            body {
-                flex-direction: column;
-                overflow-y: auto;
-                height: auto;
-            }
-
-            div#clickerSide {
-                width: 100%;
-                padding: 20px 0;
-                min-height: 50vh;
-            }
-
-            div#leftSide {
-                width: 100% !important;
-                height: auto;
-                border-radius: 20px 20px 0 0;
-                border-left: none;
-                border-top: 5px solid #ff0000;
-            }
-
-            div#shop {
-                height: 60vh;
-            }
-
-            img#sus {
-                width: 180px;
-            }
-
-            .meme-card {
-                padding: 8px;
-            }
+            font-size: 13pt;
         }
     </style>
 </head>
 <body>
-
-    <div id="clickerSide">
-        <button  id="resetAllButton" onclick="resetAllClick()">Resetar</button>
-        <h2 id="points">Social Credits = </h2>
-        <h3 id="pointsPerSecond">por segundo: </h3>
-        <img src="images/sus.png" alt="Sus" id="sus">
-        <button id="surprise">Surprise</button>
-    </div>
-
-    <div id="leftSide">
-
-        <div class="upgradeArea" id="upgradeArea">
-            <div class="titleUpgrade"></div>
+    <div class="container">
+        <div id="leftSide">
+            <h1 id="pointsManager">Social Credits:</h1>
+            <h2 id="ppsManager">por segundo:</h2>
+            <img src="images/sus.png" alt="O sus" id="sus" onclick="susClick()">
         </div>
 
-        <div id="shop">
-
-            <div class="titleShop"></div>
-
-            <div class="meme-card" onclick="comprarMeme(0, 'reset')">
-                <h3>The Grand Reset of Memes</h3>
-                <img src="images/memreset.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-reset">Ano: 2026</p>
-                    <p id="cost-reset">Custo: 600.000.000.000.000.000</p>
-                    <p id="owned-reset">Quantidade: 0</p>
-                    <p id="cps-reset">Gera ???</p>
-                </div>
+        <div id="rightSide">
+            <div id="upgrades">
+                <h2 class="titleUpgrades">Upgrades</h2>
             </div>
 
-            <div class="meme-card hidden-meme" onclick="comprarMeme(1, 'tralalero')">
-                <h3>Tralalero Tralala</h3>
-                <img src="images/tralalero.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-tralalero">Ano: 2025</p>
-                    <p id="cost-tralalero">Custo: 15</p>
-                    <p id="owned-tralalero">Quantidade: 0</p>
-                    <p id="cps-tralalero">Gera 0.5/s</p>
-                </div>
+            <div id="loja">
+                <h2 class="titleLoja">Loja</h2>
             </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(2, 'chillGuy')">
-                <h3>Cara Tranquilo</h3>
-                <img src="images/chillGuy.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-chillGuy">Ano: 2024</p>
-                    <p id="cost-chillGuy">Custo: 100</p>
-                    <p id="owned-chillGuy">Quantidade: 0</p>
-                    <p id="cps-chillGuy">Gera 2/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(3, 'skibidi')">
-                <h3>Skibidi Toilet</h3>
-                <img src="images/skibidi.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-skibidi">Ano: 2023</p>
-                    <p id="cost-skibidi">Custo: 1.100</p>
-                    <p id="owned-skibidi">Quantidade: 0</p>
-                    <p id="cps-skibidi">Gera 8/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(4, 'feast')">
-                <h3>Mr Feast</h3>
-                <img src="images/mrFeast.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-feast">Ano: 2022</p>
-                    <p id="cost-feast">Custo: 12.000</p>
-                    <p id="owned-feast">Quantidade: 0</p>
-                    <p id="cps-feast">Gera 47/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(5, 'axel')">
-                <h3>Axel in Harlem</h3>
-                <img src="images/axel.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-axel">Ano: 2021</p>
-                    <p id="cost-axel">Custo: 130.000</p>
-                    <p id="owned-axel">Quantidade: 0</p>
-                    <p id="cps-axel">Gera 260/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(6, 'coffin')">
-                <h3>Coffin Dance</h3>
-                <img src="images/coffin.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-coffin">Ano: 2020</p>
-                    <p id="cost-coffin">Custo: 1.400.000</p>
-                    <p id="owned-coffin">Quantidade: 0</p>
-                    <p id="cps-coffin">Gera 1.100/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(7, 'woman')">
-                <h3>Woman Yelling Cat</h3>
-                <img src="images/woman.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-woman">Ano: 2019</p>
-                    <p id="cost-woman">Custo: 20.000.000</p>
-                    <p id="owned-woman">Quantidade: 0</p>
-                    <p id="cps-woman">Gera 8.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(8, 'knuckles')">
-                <h3>Ugandan Knuckles</h3>
-                <img src="images/knuckles.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-knuckles">Ano: 2018</p>
-                    <p id="cost-knuckles">Custo: 330.000.000</p>
-                    <p id="owned-knuckles">Quantidade: 0</p>
-                    <p id="cps-knuckles">Gera 47.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(9, 'bf')">
-                <h3>Distracted BF</h3>
-                <img src="images/discractedBF.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-bf">Ano: 2017</p>
-                    <p id="cost-bf">Custo: 510.000.000</p>
-                    <p id="owned-bf">Quantidade: 0</p>
-                    <p id="cps-bf">Gera 95.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(10, 'dat')">
-                <h3>Dat Boi</h3>
-                <img src="images/dat.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-dat">Ano: 2016</p>
-                    <p id="cost-dat">Custo: 750.000.000</p>
-                    <p id="owned-dat">Quantidade: 0</p>
-                    <p id="cps-dat">Gera 160.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(11, 'john')">
-                <h3>John Cena</h3>
-                <img src="images/john.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-john">Ano: 2015</p>
-                    <p id="cost-john">Custo: 1.250.000.000</p>
-                    <p id="owned-john">Quantidade: 0</p>
-                    <p id="cps-john">Gera 285.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(12, 'kermit')">
-                <h3>Kermit</h3>
-                <img src="images/kermit.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-kermit">Ano: 2014</p>
-                    <p id="cost-kermit">Custo: 3.900.000.000</p>
-                    <p id="owned-kermit">Quantidade: 0</p>
-                    <p  id="cps-kermit">Gera 780.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(13, 'doge')">
-                <h3>Doge</h3>
-                <img src="images/doge.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-doge">Ano: 2013</p>
-                    <p id="cost-doge">Custo: 15.000.000.000</p>
-                    <p id="owned-doge">Quantidade: 0</p>
-                    <p id="cps-doge">Gera 2.300.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(14, 'gangnam')">
-                <h3>Gangnam Style</h3>
-                <img src="images/gangnam.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-gangnam">Ano: 2012</p>
-                    <p id="cost-gangnam">Custo: 85.000.000.000</p>
-                    <p id="owned-gangnam">Quantidade: 0</p>
-                    <p id="cps-gangnam">Gera 9.800.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(15, 'nyan')">
-                <h3>Nyan Cat</h3>
-                <img src="images/nyan.png" alt="">
-                <div class="meme-info">
-                    <p id="year-nyan">Ano: 2011</p>
-                    <p id="cost-nyan">Custo: 510.000.000.000</p>
-                    <p id="owned-nyan">Quantidade: 0</p>
-                    <p id="cps-nyan">Gera 45.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(16 ,'troll')">
-                <h3>Troll Face</h3>
-                <img src="images/troll.png" alt="">
-                <div class="meme-info">
-                    <p id="year-troll">Ano: 2010</p>
-                    <p id="cost-troll">Custo: 2.800.000.000.000</p>
-                    <p id="owned-troll">Quantidade: 0</p>
-                    <p id="cps-troll">Gera 230.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(17, 'keyboard')">
-                <h3>Keyboard Cat</h3>
-                <img src="images/keyboardCat.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-keyboard">Ano: 2009</p>
-                    <p id="cost-keyboard">Custo: 16.000.000.000.000</p>
-                    <p id="owned-keyboard">Quantidade: 0</p>
-                    <p id="cps-keyboard">Gera 1.100.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(18, 'chipmunk')">
-                <h3>Dramatic Chipmunk</h3>
-                <img src="images/chipmunk.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-chipmunk">Ano: 2008</p>
-                    <p id="cost-chipmunk">Custo: 150.000.000.000.000</p>
-                    <p id="owned-chipmunk">Quantidade: 0</p>
-                    <p id="cps-chipmunk">Gera 8.200.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(19, 'rick')">
-                <h3>Rickroll</h3>
-                <img src="images/rickroll.jpeg" alt="">
-                <div class="meme-info">    
-                    <p id="year-rick">Ano: 2007</p>
-                    <p id="cost-rick">Custo: 1.400.000.000.000.000</p>
-                    <p id="owned-rick">Quantidade: 0</p>
-                    <p id="cps-rick">Gera 65.000.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(20, 'surprise')">
-                <h3>Surprise Motherfucker</h3>
-                <img src="images/dexter.gif" alt="">
-                <div class="meme-info">
-                    <p id="year-surprise">Ano: 2006</p>
-                    <p id="cost-surprise">Custo: 12.000.000.000.000.000</p>
-                    <p id="owned-surprise">Quantidade: 0</p>
-                    <p id="cps-surprise">Gera 430.000.000.000/s</p>
-                </div>
-            </div>
-
-            <div class="meme-card hidden-meme" onclick="comprarMeme(21, 'leeroy')">
-                <h3>Leeroy Jenkins</h3>
-                <img src="images/leroyJenkins.jpeg" alt="">
-                <div class="meme-info">
-                    <p id="year-leeroy">Ano: 2005</p>
-                    <p id="cost-leeroy">Custo: 99.000.000.000.000.000</p>
-                    <p id="owned-leeroy">Quantidade: 0</p>
-                    <p id="cps-leeroy">Gera 1.900.000.000.000/s</p>
-                </div>
-            </div>
-
         </div>
-
     </div>
 
     <script>
-
         let pontos = localStorage.getItem('pontos')
-        let pontosPorSegundo = localStorage.getItem('pointsPerSecond')
-        let valorClick = localStorage.getItem('valorClick')
+        let pointsPerSecond = localStorage.getItem('pointsPerSecond')
+        let valorClique = localStorage.getItem('valorClique')
         let clicksTotais = localStorage.getItem('clicksTotais')
-        let saveData = JSON.parse(localStorage.getItem('construçoes_save'))
-        
-        let clickValue = valorClick ? Number(valorClick) : 1
-        let totalClicks = clicksTotais ? Number(clicksTotais) : 0
-        let upgradeLiberado = false
+        let Memes = localStorage.getItem('memesData')
+
+        let clickValue = valorClique ? Number(valorClique) : 1
         let points = pontos ? Number(pontos) : 0
-        let pointsPerSecond = pontosPorSegundo ? Number(pontosPorSegundo) : 0
-        let lastClicks = []
-        let pointManager = document.getElementById('points')
-        let ppsManager = document.getElementById('pointsPerSecond')
-        let susClicker = document.getElementById('sus')
-        let surprise = document.getElementById('surprise')
-        let surpriseCooldown = false
+        let totalClicks = clicksTotais ? Number(clicksTotais) : 0
+        let pps = pointsPerSecond ? Number(pointsPerSecond) : 0
 
-        pointManager.innerHTML = `Social Credits = ${points.toFixed(1)}`
-        ppsManager.innerHTML = 'por segundo: 0'
-        document.title = `${points.toFixed(1)} Social Credits - Sus Clicker`
+        let somSus = new Audio('sounds/sus.mp3')
+        let somNop = new Audio('sounds/nop.mp3')
+        let somSurpresa = new Audio('sounds/susto.mp3')
 
-        susClicker.addEventListener('click', susClick)
-        surprise.addEventListener('click', surpriseClick)
+        let pointManager = document.getElementById('pointsManager')
+        let ppsManager = document.getElementById('ppsManager')
 
-        const somClique = new Audio('sounds/the-rock-sound-effect.mp3')
-        const somJumpscare = new Audio('sounds/sonic-exe-scream.mp3')
-        const somNope = new Audio('sounds/nop.mp3')
+        pointManager.innerHTML = `Social Credits: ${points}`
+        ppsManager.innerHTML = `por segundo: ${pps}`
 
-        let construçoes = [
+        const memes = [
             {
-                id: 'reset',
-                nome: 'The Meme Reset',
-                ano: '2026 (Loop)',
-                custo: 600e15,
-                cps: Infinity,
-                som: 'sounds/thereset.mp3',
-                resets: 0
+                imagem: 'images/memreset.jpeg',
+                nome: 'The Grand Reset of Memes',
+                ano: 2026,
+                preco: 600e15,
+                gera: Infinity,
+                resets: 0,
+                som: 'sounds/reset.mp3'
             },
-
             {
-                id: 'tralalero',
-                nome: 'Tralalero Tralala',
+                imagem: 'images/tralalero.jpeg',
+                nome: 'Tralalero',
                 ano: 2025,
-                custo: 15,
-                cps: 0.5,
-                som: 'sounds/tralalero.mp3',
+                preco: 15,
+                gera: 0.5,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Los Tralalelitos", icone: "👶", multiplicador: 2, preco: [], descricao: "Os filhos do tralalero." },
-                    { nome: "Bombardiro Crocodilo", icone: "🐊", multiplicador: 2, preco: [], descricao: "Melhor amigo dele, embora eles briguem muito." },
-                    { nome: "Jogando Fortnite", icone: "🎮", multiplicador: 2, preco: [], descricao: "O passatempo favorito que ele usa pra passar tempo com o filho." },
-                    { nome: "Nikes Azuis", icone: "👟", multiplicador: 2, preco: [], descricao: "O par de calçados oficial dele, não sai de casa sem." },
-                    { nome: "Orcalero Orcala", icone: "🐋", multiplicador: 2, preco: [], descricao: "O primo dele, às vezes saem juntos pra nadar." },
-                    { nome: "Chá de Laranja", icone: "🍵", multiplicador: 2, preco: [], descricao: "Dizem que é o segredo da voz dele." },
-                    { nome: "Aula de Geografia", icone: "🌎", multiplicador: 2, preco: [], descricao: "Tralalero viajando o mundo todo." },
-                    { nome: "Microfone de Plástico", icone: "🎤", multiplicador: 2, preco: [], descricao: "Onde a mágica do brainrot acontece." },
-                    { nome: "Coro dos Tralalas", icone: "🎶", multiplicador: 3, preco: [], descricao: "Milhares de vozes cantando juntas." },
-                    { nome: "Brainrot God", icone: "👑", multiplicador: 5, preco: [], descricao: "A entidade máxima da confusão mental." }
-                ]
+                som: 'sounds/tralalero.mp3'
             },
-
             {
-                id: 'chillGuy',
+                imagem: 'images/chillGuy.jpeg',
                 nome: 'Cara Tranquilo',
                 ano: 2024,
-                custo: 100,
-                cps: 2,
-                som: 'sounds/chillGuy.mp3',
+                preco: 100,
+                gera: 2,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Mãos no Bolso", icone: "🧥", multiplicador: 2, preco: [], descricao: "Nada me abala, estou apenas relaxado." },
-                    { nome: "Suéter de Malha", icone: "👕", multiplicador: 2, preco: [], descricao: "O uniforme oficial de quem não quer guerra." },
-                    { nome: "Olhar de Peixe Morto", icone: "👀", multiplicador: 2, preco: [], descricao: "0% estresse, 100% vibe." },
-                    { nome: "Low Profile", icone: "👤", multiplicador: 2, preco: [], descricao: "Viver escondido é viver melhor." },
-                    { nome: "Festa Silenciosa", icone: "🎧", multiplicador: 2, preco: [], descricao: "Curto a música, mas sem fazer barulho." },
-                    { nome: "Meditação Urbana", icone: "🧘", multiplicador: 2, preco: [], descricao: "Paz interior em meio ao caos do Twitter." },
-                    { nome: "Vibe Inquebrável", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Podem me xingar, eu continuo relaxado." },
-                    { nome: "Diploma de Tranquilidade", icone: "📜", multiplicador: 2, preco: [], descricao: "Formado em não ligar para nada." },
-                    { nome: "Aura de Calma", icone: "✨", multiplicador: 3, preco: [], descricao: "Quem chega perto de você para de chorar." },
-                    { nome: "O Deus do Zen", icone: "🌌", multiplicador: 5, preco: [], descricao: "O universo pode acabar, você estará apenas relaxando." }
-                ]
+                som: 'sounds/chill.mp3'
             },
-
             {
-                id: 'skibidi',
+                imagem: 'images/skibidi.jpeg',
                 nome: 'Skibidi Toilet',
                 ano: 2023,
-                custo: 1100,
-                cps: 8,
-                som: 'sounds/skibidi.mp3',
+                preco: 1100,
+                gera: 8,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Cameraman", icone: "📷", multiplicador: 2, preco: [], descricao: "A primeira linha de defesa contra os vasos." },
-                    { nome: "Speakerman", icone: "🔊", multiplicador: 2, preco: [], descricao: "Som alto o suficiente para quebrar cerâmica." },
-                    { nome: "TV Man", icone: "📺", multiplicador: 2, preco: [], descricao: "Raio hipnotizante que faz os toilets chorarem." },
-                    { nome: "Plunger Cameraman", icone: "🪠", multiplicador: 2, preco: [], descricao: "O herói que usa desentupidores como espadas." },
-                    { nome: "Titan Cameraman", icone: "🤖", multiplicador: 2, preco: [], descricao: "Ele voltou, e está gigante." },
-                    { nome: "Titan Speakerman", icone: "🔈", multiplicador: 2, preco: [], descricao: "O ritmo da destruição em massa." },
-                    { nome: "Scientist Toilet", icone: "🔬", multiplicador: 2, preco: [], descricao: "O gênio por trás das descargas malignas." },
-                    { nome: "Astro Toilet", icone: "🚀", multiplicador: 2, preco: [], descricao: "Eles vieram do espaço... e são vasos." },
-                    { nome: "G-Man Toilet 4.0", icone: "☢️", multiplicador: 3, preco: [], descricao: "Lasers, muitos lasers!" },
-                    { nome: "Skibidi Apocalypse", icone: "🚽", multiplicador: 5, preco: [], descricao: "Não adianta mais dar descarga." }
-                ]
+                som: 'sounds/skibidi.mp3'
             },
-
             {
-                id: 'feast',
+                imagem: 'images/mrFeast.jpeg',
                 nome: 'Mr Feast',
                 ano: 2022,
-                custo: 12000,
-                cps: 47,
-                som: 'sounds/feast.mp3',
+                preco: 12000,
+                gera: 47,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Desafio de 24h", icone: "⏳", multiplicador: 2, preco: [], descricao: "Fique parado e ganhe dinheiro." },
-                    { nome: "Beast Burger", icone: "🍔", multiplicador: 2, preco: [], descricao: "Um hambúrguer com gosto de visualizações." },
-                    { nome: "Ilha Particular", icone: "🏝️", multiplicador: 2, preco: [], descricao: "Dei uma ilha para o último que sair do círculo." },
-                    { nome: "Team Trees", icone: "🌲", multiplicador: 2, preco: [], descricao: "Plantando árvores pra limpar sua consciência." },
-                    { nome: "Squid Game Real", icone: "🦑", multiplicador: 2, preco: [], descricao: "Um jogo de vida ou morte, mas com prêmios." },
-                    { nome: "Cartão de Crédito Ilimitado", icone: "💳", multiplicador: 2, preco: [], descricao: "Comprei tudo que vi na frente." },
-                    { nome: "Beast Reacts", icone: "😲", multiplicador: 2, preco: [], descricao: "Reagindo a si mesmo ganhando dinheiro." },
-                    { nome: "100 Milhões de Inscritos", icone: "🧱", multiplicador: 2, preco: [], descricao: "A placa de platina que brilha mais que o sol." },
-                    { nome: "Filantropia Agressiva", icone: "🤝", multiplicador: 3, preco: [], descricao: "Curando o mundo um vídeo por vez." },
-                    { nome: "O Dono do YouTube", icone: "👑", multiplicador: 5, preco: [], descricao: "Mr Feast agora é a própria plataforma." }
-                ]
+                som: 'sounds/feast.mp3'
             },
-
             {
-                id: 'axel',
+                imagem: 'images/axel.jpeg',
                 nome: 'Axel in Harlem',
                 ano: 2021,
-                custo: 130000,
-                cps: 260,
-                som: 'sounds/axel.mp3',
+                preco: 130000,
+                gera: 260,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Terno Rosa", icone: "🧥", multiplicador: 2, preco: [], descricao: "Elegância pura caminhando por Harlem." },
-                    { nome: "Chapéu Vermelho", icone: "🎩", multiplicador: 2, preco: [], descricao: "O acessório que completa o drip." },
-                    { nome: "Caminhada Imponente", icone: "🚶", multiplicador: 2, preco: [], descricao: "Todos param para ver você passar." },
-                    { nome: "Loja de Mostarda", icone: "🧴", multiplicador: 2, preco: [], descricao: "Onde tudo começou." },
-                    { nome: "Assobio Contagiante", icone: "😙", multiplicador: 2, preco: [], descricao: "A trilha sonora da sua chegada." },
-                    { nome: "O Grupo de Seguidores", icone: "👥", multiplicador: 2, preco: [], descricao: "Três caras que não param de te admirar." },
-                    { nome: "Elevador de Luxo", icone: "🛗", multiplicador: 2, preco: [], descricao: "Próxima parada: O topo." },
-                    { nome: "Novos Forgees", icone: "👟", multiplicador: 2, preco: [], descricao: "I put the new Forgis on the Jeep." },
-                    { nome: "Mestre do Rebolado", icone: "🍑", multiplicador: 3, preco: [], descricao: "Física de animação avançada." },
-                    { nome: "King of Harlem", icone: "👑", multiplicador: 5, preco: [], descricao: "A cidade inteira segue seus passos." }
-                ]
+                som: 'sounds/axel.mp3'
             },
-
             {
-                id: 'coffin',
+                imagem: 'images/coffin.jpeg',
                 nome: 'Coffin Dance',
                 ano: 2020,
-                custo: 1400000,
-                cps: 1100,
-                som: 'sounds/coffinDance.mp3',
+                preco: 1400000,
+                gera: 1250,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Sapato de Verniz", icone: "👞", multiplicador: 2, preco: [], descricao: "Brilhando mais que seu futuro." },
-                    { nome: "Óculos Escuros", icone: "🕶️", multiplicador: 2, preco: [], descricao: "Estilo mesmo em momentos tristes." },
-                    { nome: "Ritmo Astronomia", icone: "🎵", multiplicador: 2, preco: [], descricao: "A batida que anuncia o fim." },
-                    { nome: "Passinho Sincronizado", icone: "💃", multiplicador: 2, preco: [], descricao: "A morte nunca foi tão coreografada." },
-                    { nome: "Caixão de Ouro", icone: "⚰️", multiplicador: 2, preco: [], descricao: "Um descanso eterno com muito luxo." },
-                    { nome: "Mestre de Cerimônia", icone: "🎩", multiplicador: 2, preco: [], descricao: "O líder que guia a dança." },
-                    { nome: "Vídeo de Fail", icone: "📉", multiplicador: 2, preco: [], descricao: "Você aparece sempre que alguém faz besteira." },
-                    { nome: "Turnê Mundial", icone: "🌍", multiplicador: 2, preco: [], descricao: "Dançando em todos os continentes." },
-                    { nome: "Imortalidade Dançante", icone: "💀", multiplicador: 3, preco: [], descricao: "Nem a morte para esse groove." },
-                    { nome: "Funeral Galáctico", icone: "🌌", multiplicador: 5, preco: [], descricao: "Enterrando estrelas que explodiram." }
-                ]
+                som: 'sounds/coffinDance.mp3'
             },
-
             {
-                id: 'woman',
-                nome: 'Woman Yelling at a Cat',
+                imagem: 'images/woman.jpeg',
+                nome: 'Woman & Cat',
                 ano: 2019,
-                custo: 20000000,
-                cps: 8000,
-                som: 'sounds/woman-yeling-cat.mp3',
+                preco: 20000000,
+                gera: 5500,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Dedo Apontado", icone: "👈", multiplicador: 2, preco: [], descricao: "A arma principal da discussão." },
-                    { nome: "Prato de Salada", icone: "🥗", multiplicador: 2, preco: [], descricao: "O jantar confuso do gato Smudge." },
-                    { nome: "Amiga Seguradora", icone: "👩‍❤️‍👩", multiplicador: 2, preco: [], descricao: "Alguém precisa te segurar nesse restaurante." },
-                    { nome: "Expressão de Confusão", icone: "🐱", multiplicador: 2, preco: [], descricao: "O gato não tem ideia do que você está falando." },
-                    { nome: "Restaurante de Luxo", icone: "🍽️", multiplicador: 2, preco: [], descricao: "O cenário perfeito para um barraco." },
-                    { nome: "Legendas Engraçadas", icone: "💬", multiplicador: 2, preco: [], descricao: "Textos que mudam o sentido da briga." },
-                    { nome: "Maquiagem Borrada", icone: "💄", multiplicador: 2, preco: [], descricao: "O drama atingiu o nível máximo." },
-                    { nome: "Meme de Duas Telas", icone: "🖼️", multiplicador: 2, preco: [], descricao: "A montagem que uniu dois mundos." },
-                    { nome: "Paz no Jantar", icone: "🕊️", multiplicador: 3, preco: [], descricao: "Finalmente fizeram as pazes (ou não)." },
-                    { nome: "Fusão Lendária", icone: "🌀", multiplicador: 5, preco: [], descricao: "O meme que nunca morre no seu feed." }
-                ]
+                som: 'sounds/woman.mp3'
             },
-
             {
-                id: 'knuckles',
+                imagem: 'images/knuckles.jpeg',
                 nome: 'Ugandan Knuckles',
                 ano: 2018,
-                custo: 330000000,
-                cps: 47000,
-                som: 'sounds/knuckles.mp3',
+                preco: 160000000,
+                gera: 17600,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Língua Estalada", icone: "👅", multiplicador: 2, preco: [], descricao: "O som que assombra os servidores de VR Chat." },
-                    { nome: "Procurando a Rainha", icone: "👸", multiplicador: 2, preco: [], descricao: "Você precisa encontrar a rainha para saber o caminho." },
-                    { nome: "Guerreiro da Tribo", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Um exército de Knuckles vermelhos e deformados." },
-                    { nome: "Ebola Espiritual", icone: "🦠", multiplicador: 2, preco: [], descricao: "Um clássico pesado de 2018." },
-                    { nome: "O Caminho (The Way)", icone: "🛣️", multiplicador: 2, preco: [], descricao: "Finalmente, você descobriu para onde todos estão indo." },
-                    { nome: "Knuckles Gigante", icone: "👹", multiplicador: 2, preco: [], descricao: "Ele é grande, ele é vermelho, ele estala." },
-                    { nome: "Cosplay de Sonic", icone: "🦔", multiplicador: 2, preco: [], descricao: "Uma tentativa falha de parecer o ouriço original." },
-                    { nome: "Comunidade VR", icone: "👓", multiplicador: 2, preco: [], descricao: "Infiltrando-se em todos os mundos virtuais." },
-                    { nome: "Canto Tribal", icone: "🗣️", multiplicador: 3, preco: [], descricao: "O som de mil estalos ao mesmo tempo." },
-                    { nome: "Deus de Uganda", icone: "✨", multiplicador: 5, preco: [], descricao: "Você agora é a própria Rainha." }
-                ]
+                som: 'sounds/knuckles.mp3'
             },
-
             {
-                id: 'bf',
-                nome: 'Distracted Boyfriend',
+                imagem: 'images/BF.jpeg',
+                nome: 'Distracted BF',
                 ano: 2017,
-                custo: 510000000,
-                cps: 95000,
-                som: 'sounds/distractedBF.mp3',
+                preco: 500000000,
+                gera: 35000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Camisa Azul Clássica", icone: "👕", multiplicador: 2, preco: [], descricao: "O uniforme oficial da traição visual." },
-                    { nome: "A Garota de Vermelho", icone: "💃", multiplicador: 2, preco: [], descricao: "O novo interesse que estragou o passeio." },
-                    { nome: "Namorada Chocada", icone: "😮", multiplicador: 2, preco: [], descricao: "Aquela cara de quem não está acreditando no que viu." },
-                    { nome: "Banco de Imagens", icone: "📷", multiplicador: 2, preco: [], descricao: "De onde saem as fotos mais aleatórias do mundo." },
-                    { nome: "Triângulo Amoroso", icone: "📐", multiplicador: 2, preco: [], descricao: "A geometria perfeita do entretenimento." },
-                    { nome: "Legendas Virais", icone: "💬", multiplicador: 2, preco: [], descricao: "Qualquer texto fica engraçado nessa imagem." },
-                    { nome: "Cena de Ciúmes", icone: "💢", multiplicador: 2, preco: [], descricao: "A briga que gerou milhões de curtidas." },
-                    { nome: "O Multiverso das Fotos", icone: "🌌", multiplicador: 2, preco: [], descricao: "Existem outras 50 fotos desse casal no Google." },
-                    { nome: "Fidelidade Zero", icone: "🚫", multiplicador: 3, preco: [], descricao: "Sempre olhando para o próximo meme." },
-                    { nome: "Mestre do Contexto", icone: "👑", multiplicador: 5, preco: [], descricao: "Você agora consegue explicar qualquer situação com uma foto." }
-                ]
+                som: 'sounds/distractedBF.mp3'
             },
-
-
             {
-                id: 'dat',
+                imagem: 'images/dat.jpeg',
                 nome: 'Dat Boi',
                 ano: 2016,
-                custo: 750000000,
-                cps: 160000,
-                som: 'sounds/dat.mp3',
+                preco: 750000000,
+                gera: 70000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Monociclo de Prata", icone: "🚲", multiplicador: 2, preco: [], descricao: "Equilíbrio perfeito sobre uma roda só." },
-                    { nome: "O Shit Waddup!", icone: "🐸", multiplicador: 2, preco: [], descricao: "A saudação oficial de 2016." },
-                    { nome: "Sapo Verde-Limão", icone: "🦎", multiplicador: 2, preco: [], descricao: "O anfíbio mais estiloso da internet." },
-                    { nome: "Passeio no Parque", icone: "🌳", multiplicador: 2, preco: [], descricao: "Aqui vem ele!" },
-                    { nome: "Animação 3D Retrô", icone: "💻", multiplicador: 2, preco: [], descricao: "Gráficos que só o início dos anos 2000 explica." },
-                    { nome: "Acompanhante de Monociclo", icone: "👥", multiplicador: 2, preco: [], descricao: "Uma legião de sapos vindo em sua direção." },
-                    { nome: "Física Desafiada", icone: "🌪️", multiplicador: 2, preco: [], descricao: "Pedalando no ar e no vácuo." },
-                    { nome: "Meme de Transição", icone: "🔜", multiplicador: 2, preco: [], descricao: "Ele aparece quando você menos espera." },
-                    { nome: "Embaixador de 2016", icone: "🏅", multiplicador: 3, preco: [], descricao: "Representando o ano mais louco dos memes." },
-                    { nome: "The Boy Supreme", icone: "🌌", multiplicador: 5, preco: [], descricao: "Ele chegou, e ele é eterno." }
-                ]
+                som: 'sounds/dat.mp3'
             },
-
             {
-                id: 'john',
+                imagem: 'images/john.jpeg',
                 nome: 'John Cena',
                 ano: 2015,
-                custo: 1250000000,
-                cps: 285000,
-                som: 'sounds/john.mp3',
+                preco: 1500000000,
+                gera: 150000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "O Boné Invisível", icone: "🧢", multiplicador: 2, preco: [], descricao: "Você não pode me ver!" },
-                    { nome: "Bing Chilling", icone: "🍦", multiplicador: 2, preco: [], descricao: "Sorvete e mandarim: a combinação inesperada." },
-                    { nome: "Tema de Entrada", icone: "🎺", multiplicador: 2, preco: [], descricao: "TAN-TAN-TAN-TAAAAAN! O som que estoura os ouvidos." },
-                    { nome: "Ajuste de Atitude", icone: "💪", multiplicador: 2, preco: [], descricao: "O golpe final que ninguém vê chegando." },
-                    { nome: "Camuflagem Total", icone: "👻", multiplicador: 2, preco: [], descricao: "As pessoas acham que estão sozinhas na sala." },
-                    { nome: "John Cena da Paz", icone: "🕊️", multiplicador: 2, preco: [], descricao: "Fazendo diplomacia enquanto ninguém te vê." },
-                    { nome: "Mestre do Meme Surpresa", icone: "❗", multiplicador: 2, preco: [], descricao: "Aparecendo nos vídeos mais aleatórios da internet." },
-                    { nome: "Social Credits", icone: "🇨🇳", multiplicador: 2, preco: [], descricao: "+1000 créditos para o seu perfil." },
-                    { nome: "Invisibilidade Atômica", icone: "⚛️", multiplicador: 3, preco: [], descricao: "Você se tornou uma lenda urbana." },
-                    { nome: "The Invisible God", icone: "👁️‍🗨️", multiplicador: 5, preco: [], descricao: "O maior campeão que ninguém nunca viu." }
-                ]
+                som: 'sounds/john.mp3'
             },
-
             {
-                id: 'kermit',
+                imagem: 'images/kermit.jpeg',
                 nome: 'Kermit',
                 ano: 2014,
-                custo: 3900000000,
-                cps: 780000,
-                som: 'sounds/kermit.mp3',
+                preco: 3900000000,
+                gera: 640000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Chá da Verdade", icone: "🍵", multiplicador: 2, preco: [], descricao: "Mas isso não é da minha conta..." },
-                    { nome: "Evil Kermit", icone: "🥷", multiplicador: 2, preco: [], descricao: "O capuz preto que te manda fazer besteira." },
-                    { nome: "Banjo do Pântano", icone: "🪕", multiplicador: 2, preco: [], descricao: "Uma melodia triste e relaxante." },
-                    { nome: "O Grito Agudo", icone: "😱", multiplicador: 2, preco: [], descricao: "YAAAAAAAY! As mãos balançando freneticamente." },
-                    { nome: "Janela Chuvosa", icone: "🌧️", multiplicador: 2, preco: [], descricao: "Momento reflexivo de um sapo triste." },
-                    { nome: "Dilema Interno", icone: "🧠", multiplicador: 2, preco: [], descricao: "Eu vs Eu mesmo (de capuz)." },
-                    { nome: "Miss Piggy", icone: "🐷", multiplicador: 2, preco: [], descricao: "Um relacionamento explosivo e lucrativo." },
-                    { nome: "Sapo de Repórter", icone: "🎤", multiplicador: 2, preco: [], descricao: "Trazendo as notícias mais absurdas do dia." },
-                    { nome: "Voz de Taquara Rachada", icone: "📻", multiplicador: 3, preco: [], descricao: "Um timbre inconfundível." },
-                    { nome: "Entidade dos Muppets", icone: "🎭", multiplicador: 5, preco: [], descricao: "O rei do pântano e dos memes sarcásticos." }
-                ]
+                som: 'sounds/kermit.mp3'
             },
-
             {
-                id: 'doge',
-                nome: 'Doge (RIP 2024)',
+                imagem: 'images/doge.jpeg',
+                nome: 'Doge',
                 ano: 2013,
-                custo: 15000000000,
-                cps: 2300000,
-                som: 'sounds/doge.mp3',
+                preco: 15000000000,
+                gera: 1500000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Much Wow", icone: "🐕", multiplicador: 2, preco: [], descricao: "Tanta surpresa. Muito clique." },
-                    { nome: "Very Currency", icone: "🪙", multiplicador: 2, preco: [], descricao: "A moeda que vale o que você acredita." },
-                    { nome: "Doge de Pelúcia", icone: "🧸", multiplicador: 2, preco: [], descricao: "Tão fofinho, muito abraço." },
-                    { nome: "Shiba Realista", icone: "🐕‍🦺", multiplicador: 2, preco: [], descricao: "O cachorro original que começou tudo." },
-                    { nome: "Meme de 2013", icone: "📜", multiplicador: 2, preco: [], descricao: "Um clássico da era de ouro." },
-                    { nome: "Bonk!", icone: "🔨", multiplicador: 2, preco: [], descricao: "Mande os inimigos para a 'horny jail'." },
-                    { nome: "Doge Elon Musk", icone: "🚀", multiplicador: 2, preco: [], descricao: "Indo para a lua!" },
-                    { nome: "Cheems (Irmão)", icone: "🍔", multiplicador: 2, preco: [], descricao: "Dor e sofrimento em forma de dogue." },
-                    { nome: "Doge da Galáxia", icone: "🌌", multiplicador: 3, preco: [], descricao: "O universo é feito de 'wows'." },
-                    { nome: "To The Moon!", icone: "🌕", multiplicador: 5, preco: [], descricao: "O Doge finalmente chegou lá." }
-                ]
+                som: 'sounds/doge.mp3'
             },
-
             {
-                id: 'gangnam',
+                imagem: 'images/gangnam.jpeg',
                 nome: 'Gangnam Style',
                 ano: 2012,
-                custo: 85000000000,
-                cps: 9800000,
-                som: 'sounds/gangnam.mp3',
+                preco: 59000000000,
+                gera: 5300000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Oppa Gangnam Style!", icone: "🕶️", multiplicador: 2, preco: [], descricao: "A frase que mudou o algoritmo pra sempre." },
-                    { nome: "Dança do Cavalo", icone: "🐎", multiplicador: 2, preco: [], descricao: "O passo que todo mundo tentou fazer em 2012." },
-                    { nome: "Elevador do Grito", icone: "🛗", multiplicador: 2, preco: [], descricao: "Aquela cena clássica que ninguém esquece." },
-                    { nome: "Terno Azul Turquesa", icone: "🧥", multiplicador: 2, preco: [], descricao: "Ousadia e alegria na moda coreana." },
-                    { nome: "1 Bilhão de Views", icone: "📈", multiplicador: 2, preco: [], descricao: "O primeiro vídeo a quebrar o contador do YouTube." },
-                    { nome: "Explosão no Estacionamento", icone: "💥", multiplicador: 2, preco: [], descricao: "Tudo voando enquanto você dança." },
-                    { nome: "Flashmob na Praça", icone: "👥", multiplicador: 2, preco: [], descricao: "Milhares de pessoas fazendo o passo do cavalo." },
-                    { nome: "PSY Original", icone: "🎤", multiplicador: 2, preco: [], descricao: "O homem, a lenda, o k-pop raiz." },
-                    { nome: "Quebra-Contador", icone: "🛠️", multiplicador: 3, preco: [], descricao: "O código do YouTube teve que ser reescrito por sua causa." },
-                    { nome: "Deus do Viral", icone: "👑", multiplicador: 5, preco: [], descricao: "O criador da era moderna dos hits de internet." }
-                ]
+                som: 'sounds/gangnam.mp3'
             },
-
             {
-                id: 'nyan',
+                imagem: 'images/nyan.png',
                 nome: 'Nyan Cat',
                 ano: 2011,
-                custo: 510000000000,
-                cps: 45000000,
-                som: 'sounds/nyan.mp3',
+                preco: 97000000000,
+                gera: 25000000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Torrada de Morango", icone: "🍓", multiplicador: 2, preco: [], descricao: "O corpo perfeito para um gato espacial." },
-                    { nome: "Rastro de Arco-Íris", icone: "🌈", multiplicador: 2, preco: [], descricao: "Deixando um rastro colorido pelo vácuo." },
-                    { nome: "Som 8-bit", icone: "👾", multiplicador: 2, preco: [], descricao: "Nyanyanyanyanyanyanya!" },
-                    { nome: "Loop de 24 Horas", icone: "🔁", multiplicador: 2, preco: [], descricao: "Desafio de resistência mental extrema." },
-                    { nome: "Gravidade Zero", icone: "👨‍🚀", multiplicador: 2, preco: [], descricao: "Flutuando no ritmo da música." },
-                    { nome: "Planeta Docinho", icone: "🍩", multiplicador: 2, preco: [], descricao: "Uma parada para lanchar entre as estrelas." },
-                    { nome: "Estrela Cadente", icone: "🌠", multiplicador: 2, preco: [], descricao: "Faça um pedido ao ver o gato passar." },
-                    { nome: "Nyan Dog (Inimigo)", icone: "🐶", multiplicador: 2, preco: [], descricao: "O rival que também quer brilhar." },
-                    { nome: "Galáxia Colorida", icone: "🌌", multiplicador: 3, preco: [], descricao: "O universo agora é feito de arco-íris." },
-                    { nome: "Entidade Pop-Tart", icone: "👑", multiplicador: 5, preco: [], descricao: "O deus supremo do rastro infinito." }
-                ]
+                som: 'sounds/nyan.mp3'
             },
-
             {
-                id: 'troll',
-                nome: 'Trollface',
+                imagem: 'images/troll.png',
+                nome: 'Troll Face',
                 ano: 2010,
-                custo: 2800000000000,
-                cps: 230000000,
-                som: 'sounds/troll.mp3',
+                preco: 130000000000,
+                gera: 70000000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Rage Comics", icone: "📖", multiplicador: 2, preco: [], descricao: "Onde tudo começou nos fóruns antigos." },
-                    { nome: "Problem?", icone: "😏", multiplicador: 2, preco: [], descricao: "A pergunta que destrói qualquer argumento." },
-                    { nome: "U Mad Bro?", icone: "😤", multiplicador: 2, preco: [], descricao: "A arte de irritar pessoas na internet." },
-                    { nome: "Lógica do Imã", icone: "🧲", multiplicador: 2, preco: [], descricao: "Energia infinita usando apenas dois imãs." },
-                    { nome: "Óleo Flutua na Água", icone: "🛢️", multiplicador: 2, preco: [], descricao: "1. Espere chover. 2. Cubra-se de óleo. 3. Voe." },
-                    { nome: "Troll Science", icone: "🧪", multiplicador: 2, preco: [], descricao: "Física que não faz sentido, mas funciona." },
-                    { nome: "Máscara de Plástico", icone: "🎭", multiplicador: 2, preco: [], descricao: "O disfarce perfeito para o caos." },
-                    { nome: "Exército de Clones", icone: "👥", multiplicador: 2, preco: [], descricao: "O mundo inteiro agora tem o mesmo sorriso." },
-                    { nome: "Le Fuuuu", icone: "🔥", multiplicador: 3, preco: [], descricao: "A fúria máxima do meme clássico." },
-                    { nome: "O Incidente do Vazio", icone: "🌑", multiplicador: 5, preco: [], descricao: "Ninguém está a salvo do troll final." }
-                ]
+                som: 'sounds/troll.mp3'
             },
-
             {
-                id: 'keyboard',
+                imagem: 'images/keyboardCat.jpeg',
                 nome: 'Keyboard Cat',
                 ano: 2009,
-                custo: 16000000000000,
-                cps: 1100000000,
-                som: 'sounds/keyboardCat.mp3',
+                preco: 380000000000,
+                gera: 180000000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Piano Casio", icone: "🎹", multiplicador: 2, preco: [], descricao: "O instrumento oficial do mestre felino." },
-                    { nome: "Camiseta Azul", icone: "👕", multiplicador: 2, preco: [], descricao: "O figurino clássico do vídeo de 1984." },
-                    { nome: "Play Him Off!", icone: "🎵", multiplicador: 2, preco: [], descricao: "Sempre que alguém falha, você toca." },
-                    { nome: "Patas Ágeis", icone: "🐾", multiplicador: 2, preco: [], descricao: "A velocidade da música aumenta o lucro." },
-                    { nome: "Vídeo em VHS", icone: "📼", multiplicador: 2, preco: [], descricao: "Qualidade de imagem de antigamente." },
-                    { nome: "Show de Talentos", icone: "🌟", multiplicador: 2, preco: [], descricao: "O gato que conquistou a TV e a Web." },
-                    { nome: "Sinfonia Felina", icone: "🎼", multiplicador: 2, preco: [], descricao: "Uma orquestra inteira tocando o tema." },
-                    { nome: "Mestre do Jazz", icone: "🎷", multiplicador: 2, preco: [], descricao: "Improviso puro no teclado." },
-                    { nome: "Pianista Imortal", icone: "👻", multiplicador: 3, preco: [], descricao: "Mesmo após décadas, a música continua." },
-                    { nome: "Mozart dos Memes", icone: "👑", multiplicador: 5, preco: [], descricao: "A maior composição da história da internet." }
-                ]
+                som: 'sounds/keyboardCat.mp3'
             },
-
             {
-                id: 'chipmunk',
+                imagem: 'images/chipmunk.jpeg',
                 nome: 'Dramatic Chipmunk',
                 ano: 2008,
-                custo: 150000000000000,
-                cps: 8200000000,
-                som: 'sounds/dramatic.mp3',
+                preco: 700000000000,
+                gera: 500000000,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "O Olhar Fixo", icone: "👀", multiplicador: 2, preco: [], descricao: "Aquele giro de cabeça dramático." },
-                    { nome: "Zoom Dramático", icone: "🔍", multiplicador: 2, preco: [], descricao: "O foco que aumenta a tensão." },
-                    { nome: "Trilha de Suspense", icone: "🎼", multiplicador: 2, preco: [], descricao: "Dun-dun-duuuuuun!" },
-                    { nome: "Esquilo da Pradaria", icone: "🐿️", multiplicador: 2, preco: [], descricao: "Na verdade, ele não é um chipmunk." },
-                    { nome: "Contrato em Hollywood", icone: "🎬", multiplicador: 2, preco: [], descricao: "O melhor ator de suspense da geração." },
-                    { nome: "Close de Rosto", icone: "📷", multiplicador: 2, preco: [], descricao: "Cada detalhe da expressão importa." },
-                    { nome: "Câmera Lenta", icone: "🎞️", multiplicador: 2, preco: [], descricao: "Aumentando o drama por segundo." },
-                    { nome: "Vilão de Novela", icone: "😈", multiplicador: 2, preco: [], descricao: "Ele sabe o seu segredo." },
-                    { nome: "Revelação Chocante", icone: "💥", multiplicador: 3, preco: [], descricao: "O plot twist que ninguém esperava." },
-                    { nome: "O Observador Eterno", icone: "👁️", multiplicador: 5, preco: [], descricao: "Ele está sempre te julgando." }
-                ]
+                som: 'sounds/dramatic.mp3'
             },
-
             {
-                id: 'rick',
+                imagem: 'images/rickroll.jpeg',
                 nome: 'Rickroll',
                 ano: 2007,
-                custo: 1400000000000000,
-                cps: 65000000000,
-                som: 'sounds/rick.mp3',
+                preco: 1.72e12,
+                gera: 2.6e9,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Microfone de Prata", icone: "🎤", multiplicador: 2, preco: [], descricao: "Nunca vai te dar, nunca vai te deixar." },
-                    { nome: "Terno de 1987", icone: "🧥", multiplicador: 2, preco: [], descricao: "Estilo imortal dos anos 80." },
-                    { nome: "Link Disfarçado", icone: "🔗", multiplicador: 2, preco: [], descricao: "Você achou que era um vídeo de tutorial..." },
-                    { nome: "O Passinho do Rick", icone: "🕺", multiplicador: 2, preco: [], descricao: "Impossível não dançar junto." },
-                    { nome: "Never Gonna Give You Up", icone: "💿", multiplicador: 2, preco: [], descricao: "O hino oficial da internet." },
-                    { nome: "QR Code Maldito", icone: "📱", multiplicador: 2, preco: [], descricao: "Escaneou, dançou." },
-                    { nome: "Barbeiro do Rick", icone: "✂️", multiplicador: 2, preco: [], descricao: "Aquele topete não se mantém sozinho." },
-                    { nome: "Exército Troll", icone: "👥", multiplicador: 2, preco: [], descricao: "Milhões de pessoas caindo no bait ao mesmo tempo." },
-                    { nome: "Disco de Diamante", icone: "💎", multiplicador: 3, preco: [], descricao: "O troll mais bem sucedido da história." },
-                    { nome: "Entidade Astley", icone: "😇", multiplicador: 5, preco: [], descricao: "Ele nunca vai desistir de você." }
-                ]
+                som: 'sounds/rick.mp3'
             },
-
             {
-                id: 'surprise',
-                nome: 'Surprise, Motherfucker!',
+                imagem: 'images/dexter.gif',
+                nome: 'Surprise Motherfucker',
                 ano: 2006,
-                custo: 12000000000000000,
-                cps: 430000000000,
-                som: 'sounds/surprise.mp3',
+                preco: 16e12,
+                gera: 10e9,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Sargento Doakes", icone: "👮", multiplicador: 2, preco: [], descricao: "Sempre desconfiado do Dexter." },
-                    { nome: "Surprise!", icone: "❗", multiplicador: 2, preco: [], descricao: "Onde você menos espera, ele aparece." },
-                    { nome: "Rimas Engraçadas", icone: "🎤", multiplicador: 2, preco: [], descricao: "Sunrise, Fries, Heart eyes, Motherfucker!" },
-                    { nome: "Porta Arrombada", icone: "🚪", multiplicador: 2, preco: [], descricao: "Ele não pede licença para entrar." },
-                    { nome: "Olhar de Poucos Amigos", icone: "😡", multiplicador: 2, preco: [], descricao: "Ele sabe que você fez algo errado." },
-                    { nome: "Meme de Reação", icone: "🖼️", multiplicador: 2, preco: [], descricao: "Perfeito para qualquer post surpresa." },
-                    { nome: "Infiltração Tática", icone: "🥷", multiplicador: 2, preco: [], descricao: "Escondido no teto ou embaixo da mesa." },
-                    { nome: "Grito de Guerra", icone: "🗣️", multiplicador: 2, preco: [], descricao: "O som que faz todos pularem da cadeira." },
-                    { nome: "Onipresença", icone: "🌎", multiplicador: 3, preco: [], descricao: "Ele está em todos os lugares ao mesmo tempo." },
-                    { nome: "The Ultimate Surprise", icone: "🎆", multiplicador: 5, preco: [], descricao: "Você nunca vai vê-lo chegar." }
-                ]
+                som: 'sounds/surprise.mp3'
             },
-
             {
-                id: 'leeroy',
+                imagem: 'images/leroyJenkins.jpeg',
                 nome: 'Leeroy Jenkins',
                 ano: 2005,
-                custo: 99000000000000000,
-                cps: 1900000000000,
-                som: 'sounds/leroy.mp3',
+                preco: 99e12,
+                gera: 65e9,
                 quantidade: 0,
-                multiplier: 0,
-                multiplierMax: 10,
-                naLoja: false,
-                upgradesPersonalizados: [
-                    { nome: "Prato de Frango", icone: "🍗", multiplicador: 2, preco: [], descricao: "Pelo menos eu tenho frango!" },
-                    { nome: "Plano de Ataque", icone: "📝", multiplicador: 2, preco: [], descricao: "Cálculos matemáticos de sobrevivência (32.33%)." },
-                    { nome: "Grito Lendário", icone: "🗣️", multiplicador: 2, preco: [], descricao: "LEEEEROOOOY JEEEEKIIINS!" },
-                    { nome: "Raid Wipe", icone: "💀", multiplicador: 2, preco: [], descricao: "Todo mundo morreu, mas valeu a pena." },
-                    { nome: "Armadura de Paladino", icone: "🛡️", multiplicador: 2, preco: [], descricao: "Brilhante e pronta para a confusão." },
-                    { nome: "Carga Imprudente", icone: "🏃", multiplicador: 2, preco: [], descricao: "Correndo direto para o perigo." },
-                    { nome: "World of Warcraft", icone: "⚔️", multiplicador: 2, preco: [], descricao: "O jogo que criou a lenda." },
-                    { nome: "Guilda dos Loucos", icone: "👥", multiplicador: 2, preco: [], descricao: "Seguindo o líder mais burro e corajoso." },
-                    { nome: "Paciência Zero", icone: "🚫", multiplicador: 3, preco: [], descricao: "Cansado de esperar a estratégia." },
-                    { nome: "Herói da Aliança", icone: "🏆", multiplicador: 5, preco: [], descricao: "O maior desastre que virou vitória." }
-                ]
+                som: 'sounds/leroy.mp3'
             }
-
         ]
 
-        function gerarPrecosUpgrades(){
-            console.log("Iniciando geração de preços...");
-            construçoes.forEach(meme => {
-                console.log(`Processando ${meme.nome}: upgradesPersonalizados existe? ${!!meme.upgradesPersonalizados}`);
-                if (meme.upgradesPersonalizados) {
-                    meme.upgradesPersonalizados.forEach((upgrade, i) => {
-                        upgrade.preco = Math.floor(meme.custo * 10 * Math.pow(1.5, i));
-                        console.log(`  Upgrade ${i} (${upgrade.nome}): preço = ${upgrade.preco}`);
-                    });
+        if(Memes){
+            let dados = JSON.parse(Memes)
+
+            memes.forEach((meme, index) => {
+                if(dados[index]){
+
+                    meme.quantidade  = dados[index].quantidade !== undefined ? dados[index].quantidade : 0
+                    meme.preco = dados[index].preco !== undefined ? dados[index].preco : 0
+                    meme.multiplier = dados[index].multiplier !== undefined ? dados[index].multiplier : 0
+
+                    if(meme.resets !== undefined) {meme.resets = dados[index].resets}
                 }
             });
-            console.log("Geração de preços concluída.");
         }
 
-        gerarPrecosUpgrades()
-
-        if (saveData) {
-            construçoes.forEach((meme, index) => {
-                if (saveData[index]) {
-                    meme.quantidade = saveData[index].quantidade || 0;
-                    meme.multiplier = saveData[index].multiplier || 0;
-                    meme.custo = saveData[index].custo || meme.custo;
-            
-                    if (meme.multiplier > 0) {
-                        for (let i = 0; i < meme.multiplier; i++) {
-                            meme.cps *= meme.upgradesPersonalizados[i].multiplicador;
-                        }
-                    }
-                }
-            });
-}
-
-        function resetAllClick(){
-            let confirmacao1 = confirm(`Você tem certeza? Seus ${formatarGrande(points)} vão sumir!`)
-
-            if (confirmacao1) {
-                let confirmacao2 = prompt("Digite 'RESETAR' para confirmar:");
-                if (confirmacao2 && confirmacao2.toUpperCase() === "RESETAR") {
-                    construçoes.forEach(meme => {
-                        meme.quantidade = 0;
-                        meme.custo = construçoes.find(c => c.id === meme.id).custo;
-                    });
-
-                    localStorage.clear();
-
-                    points = 0;
-                    pointsPerSecond = 0;
-                    totalClicks = 0;
-                    clickValue = 1;
-
-                    location.reload();
-                }
-            }
+        function formatarGrande(n){ 
+            if (n == Infinity) return ('Infinito')
+            if (n >= 1e30) return ( n / 1e30).toFixed(2) + 'Nonilhões'
+            if (n >= 1e27) return ( n / 1e27).toFixed(2) + 'Octilhões'
+            if (n >= 1e24) return ( n / 1e24).toFixed(2) + 'Septilhões'
+            if (n >= 1e21) return ( n / 1e21).toFixed(2) + 'Sextilhões'
+            if (n >= 1e18) return ( n / 1e18).toFixed(2) + 'Quintilhões'
+            if (n >= 1e15) return ( n / 1e15).toFixed(2) + 'Quatrilhões'
+            if (n >= 1e12) return ( n / 1e12).toFixed(2) + 'Trilhões'
+            if (n >= 1e9) return ( n / 1e9).toFixed(2) + 'Bilhões'
+            if (n >= 1e6) return ( n / 1e6).toFixed(2) + 'Milhões'
+            return n.toLocaleString('pt-BR')
         }
 
-        function formatarGrande(n) {
-            if (n === Infinity || n === "Infinity") return "INFINITO"
-            if (isNaN(n)) return "0"
-            if (n >= 1e18) return (n / 1e18).toFixed(2) + " Quintilhões"
-            if (n >= 1e15) return (n / 1e15).toFixed(2) + " Quatrilhões"
-            if (n >= 1e12) return (n / 1e12).toFixed(2) + " Trilhões"
-            if (n >= 1e9) return (n / 1e9).toFixed(2) + " Bilhões"
-            if (n >= 1e6) return (n / 1e6).toFixed(2) + " Milhões"
-            return n.toLocaleString('pt-BR', {
-                minimumFractionDigits: 0, 
-                maximumFractionDigits: 1
-            })
-        }
-
-        function atualizarLojaInicial() {
-            construçoes.forEach(meme => {
-        
-            let elCusto = document.getElementById(`cost-${meme.id}`)
-            if (elCusto) elCusto.innerHTML = `Custo: ${formatarGrande(meme.custo)}`
-
-            let elCPS = document.getElementById(`cps-${meme.id}`)
-            if (elCPS) elCPS.innerHTML = `Gera: ${formatarGrande(meme.cps)}/s`
-
-            let elAmount = document.getElementById(`owned-${meme.id}`)
-            if (elAmount) elAmount.innerHTML = `Quantidade: ${meme.quantidade}`
-            })
-        }
-
-        atualizarLojaInicial();
-
-        function susClick(e){
+        function susClick(){
             points += clickValue
             totalClicks += 1
-            lastClicks.push(Date.now())
             pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
-            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
 
-            somClique.currentTime = 0;
-            somClique.play()
-
-            let num = document.createElement('div');
-            num.innerText = `+${clickValue}`;
-            num.className = 'floating-number';
-    
-            num.style.left = `${e.pageX}px`;
-            num.style.top = `${e.pageY}px`;
-    
-            document.body.appendChild(num);
-    
-            setTimeout(() => num.remove(), 800);
-
-            if(totalClicks == 100 && clickValue < 2) criarUpgradeClick('👆', 'Clcker de Ferro', 2, 500)
-
-            if(totalClicks == 250 && clickValue < 5) criarUpgradeClick('✊', 'Punho dos Memes', 5, 1000)
-
-            if(totalClicks == 500 && clickValue < 15) criarUpgradeClick('🖱️', 'Super Clicker', 15, 1500)
-
-            if(totalClicks == 1000 && clickValue < 50) criarUpgradeClick('⛏️', 'Memecraft', 50, 2000)
-
-            if(totalClicks == 5000 && clickValue < 100) criarUpgradeClick('🗿', 'Sigma', 100, 5000)
+            somSus.currentTime = -1.5
+            somSus.play()
         }
 
-        function criarUpgradeClick(icon, name, newValue, cost){
-            let area = document.getElementById('upgradeArea')
+        function renderShop(){
+            let loja = document.getElementById('loja')
+            loja.innerHTML = '<h2 class="titleLoja">Loja</h2>'
 
-            let upgradeBtn = document.createElement('div')
-            upgradeBtn.style.cssText = `
-                width: 50px;
-                height: 50px;
-                background-color: gold;
-                border-radius: 10px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 2px solid white;
-                font-size: 20px;
-                box-shadow: 0 0 10px gold;
-            `
+            memes.forEach(meme => {
+                let memeCard = document.createElement('div')
+                
+                memeCard.addEventListener('click', comprarMeme)
 
-            upgradeBtn.innerHTML = icon
-            upgradeBtn.title = `${name}: Cliques valem ${newValue}! Custo: ${cost}`
+                loja.appendChild(memeCard)
 
-            upgradeBtn.onclick = function() {
-                if (points >= cost) {
-                    points -= cost
-                    clickValue = newValue
+                let Reset = meme.resets !== undefined
 
-                    localStorage.setItem('valorClick', clickValue)
+                memeCard.classList.add(Reset ? 'reset-card' : 'meme-card')
+                let contador = Reset ? `Resets: ${meme.resets}` : `Quantidade: ${meme.quantidade}`
 
-                    area.removeChild(upgradeBtn)
-                    pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
+                memeCard.innerHTML = `
+                    <h3><strong>${meme.nome}</strong></h3>
+                    <img src="${meme.imagem}" class="memeImage">
+                    <div class="meme-info">
+                        <p>Ano: ${meme.ano}</p>
+                        <p>Preço: ${formatarGrande(meme.preco)}</p>
+                        <p>Gera: ${formatarGrande(meme.gera)}</p>
+                        <p>${contador} </p>
+                    </div>
+                `
+
+                function comprarMeme(){
+                    if(points >= meme.preco){
+
+                        let memeSom = new Audio(meme.som)
+
+                        points -= meme.preco
+                        meme.preco = Math.round(meme.preco * 1.15)
+                        meme.quantidade +=1
+                        pps += meme.gera
+
+                        memeSom.currentTime = 0
+                        memeSom.play()
+
+                        pointManager.innerHTML = `Social Credits: ${points}`
+                        ppsManager.innerHTML = `por segundo: ${pps}`
+                    }
+                    else{
+                        somNop.currentTime = 0
+                        somNop.play()
+                    }
+
+                    renderShop()
                 }
-                else {
-                    somNope.play()
-                }
-            }
 
-            area.appendChild(upgradeBtn)
-
+            });
         }
 
-        function comprarMeme(index, idPrefixo) {
-            let meme = construçoes[index]
-
-            if (points >= meme.custo) {
-                points -= meme.custo
-                meme.quantidade++
-
-                document.getElementById(`owned-${idPrefixo}`).innerHTML = `Quantidade: ${meme.quantidade}`
-        
-                meme.custo = Math.ceil(meme.custo * 1.15)
-                document.getElementById(`cost-${idPrefixo}`).innerHTML = `Custo: ${formatarGrande(meme.custo)}`
-
-                document.getElementById(`cps-${idPrefixo}`).innerHTML = `Gera: ${formatarGrande(meme.cps)}`
-        
-                let audioMeme = new Audio(meme.som);
-                audioMeme.onerror = function() {
-                console.error("Erro ao carregar o som: " + meme.som);
-                };
-                audioMeme.play().catch(e => console.log("Erro ao tocar:", e));
-
-                let metas = [5, 10, 25, 50, 100, 250, 500, 1000, 1250, 1500];
-
-                if (meme.upgradesPersonalizados && meme.multiplier < 10 && meme.quantidade >= metas[meme.multiplier] && !meme.naLoja) {
-                    meme.naLoja = true
-                    let infoUpgrade = meme.upgradesPersonalizados[meme.multiplier];
-                    criarUpgradeMeme(infoUpgrade, meme);
-                }
-
-                if (index == 0 && idPrefixo == 'reset'){
-                    points = Infinity
-                    pointManager.innerHTML = `Social Credits = ${points}`
-                    document.title = `${points} Social Credits - Sus Clicker`
-
-                    document.body.style.transition = "filter 0.5s"
-                    document.body.style.filter = "invert(100%) brightness(1.5)"
-                }
-
-                pointManager.innerHTML = `Social Credits = ${formatarGrande(points)}`
-            }
-            else{
-                somNope.play()
-            }
-            
-            
-        }
-
-        function criarUpgradeMeme(info, meme){
-            let upgradeBtn = document.createElement('button');
-            upgradeBtn.className = 'upgrade-btn'
-
-            let corPrincipal = "blue";
-            let sombra = "0 0 15px blue";
-            let nivel = meme.multiplier;
-
-            if (nivel >= 3 && nivel <= 5) {
-                corPrincipal = "purple";
-                sombra = "0 0 15px purple";
-            } else if (nivel >= 6 && nivel <= 8) {
-                corPrincipal = "darkred";
-                sombra = "0 0 15px red";
-            } else if (nivel === 9) {
-                corPrincipal = "gold";
-                sombra = "0 0 25px orange";
-                upgradeBtn.style.color = "black";
-            }
-    
-            upgradeBtn.innerHTML = `
-                <div style="font-size: 25pt; margin-right: 15px;">${info.icone}</div>
-                <div style="text-align: left; line-height: 1.2;">
-                    <strong style="font-size: 14pt;">${info.nome}</strong><br>
-                    <small style="font-size: 9pt; opacity: 0.8;">${info.descricao}</small><br>
-                    <span style="font-weight: bold; color: ${nivel === 9 ? 'black' : '#00ff00'};">
-                        Preço: ${info.preco.toLocaleString()} SC
-                    </span>
-                </div>
-            `
-
-            upgradeBtn.style.cssText = `
-                min-width: 280px;
-                width: fit-content;
-                height: auto;
-                padding: 15px;
-                background-color: ${corPrincipal};
-                color: ${nivel === 9 ? 'black' : 'white'};
-                border-radius: 10px;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                border: 2px solid white;
-                box-shadow: ${sombra};
-                margin: 10px;
-                transition: 0.3s;
-                font-family: Arial, sans-serif;
-            `
-
-            upgradeBtn.onclick = function() {
-                if (points >= info.preco) {
-                    points -= info.preco
-            
-                    meme.naLoja = false
-                    meme.cps *= info.multiplicador
-                    meme.multiplier++
-                    
-                    pointManager.innerHTML = `Social Credits: ${formatarGrande(pointsPerSecond)}`
-                    ppsManager.innerHTML = `por segundo: ${formatarGrande(pointsPerSecond)}`
-                    upgradeBtn.remove()
-            
-                } 
-                else {
-                    alert("Social Credits insuficientes!")
-                }
-            }
-
-            document.getElementById('upgradeArea').appendChild(upgradeBtn)
-
-        }
+        renderShop()
 
         setInterval(function(){
-            let now = Date.now()
-
-            lastClicks = lastClicks.filter(tempo => now - tempo < 1000)
-
-            let ppsClicks = lastClicks.length * clickValue
-
-            let ppsNow = pointsPerSecond + ppsClicks
+            points += pps
 
             pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
-            ppsManager.innerHTML = `por segundo: ${formatarGrande(ppsNow)}`
-            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
-        }, 20)
-
-        setInterval(function() {
-
-            let atualPPS = 0
-
-            construçoes.forEach(meme => {
-                if(meme.quantidade>0){
-                    atualPPS += (meme.quantidade * meme.cps)
-                }
-            })
-
-            pointsPerSecond = atualPPS
-            points += pointsPerSecond
-
-            pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
-            ppsManager.innerHTML = `por segundo: ${formatarGrande(pointsPerSecond)}`
-            document.title = `${formatarGrande(points)} Social Credits - Sus Clicker`
-
-            construçoes.forEach(meme => {
-                if (points >= (meme.custo * 0.75) || meme.quantidade > 0) {
-                    let card = document.getElementById(`cost-${meme.id}`).closest('.meme-card');
-                    if (card) card.classList.remove('hidden-meme');
-                }
-            });
+            ppsManager.innerHTML = `por segundo: ${formatarGrande(pps)}`
 
             localStorage.setItem('pontos', points)
-            localStorage.setItem('pontosPorSegundo', pointsPerSecond)
-            localStorage.setItem('valorClick', clickValue)
+            localStorage.setItem('pointsPerSecond', pps)
+            localStorage.setItem('valorClique', clickValue)
             localStorage.setItem('clicksTotais', totalClicks)
-            localStorage.setItem('construçoes_save', JSON.stringify(construçoes))
-
-        }, 999)
-
-        function surpriseClick(){
-            if(surpriseCooldown){
-                somNope.play()
-                return
-            }
-
-            somJumpscare.currentTime = 0
-            somJumpscare.play()
-
-            let bonus = 0
-
-            if(pointsPerSecond >= 100e12){
-                bonus = Math.floor(Math.random() * 100e9) + 10e9
-            }
-            else if(pointsPerSecond >= 10e9){
-                bonus = Math.floor(Math.random() * 100e6) + 10e6
-            }
-            //Muitos ifs 😭
-            else{
-                bonus = Math.floor(Math.random() * 101) + 1
-            }
-
-            points += bonus
-            
-            surpriseCooldown = true
-            surprise.disabled = true
-            surprise.style.opacity = '0.25'
-            surprise.style.cursor = 'not-allowed'
-
-            let min = 20 * 60 * 1000
-            let max = 90 * 60 * 1000
-            let cooldown = Math.floor(Math.random() * (max - min + 1)) + min
-
-            alert(`Você ganhou um bonus de ${bonus} Social Credits! Próximo bônus em ${Math.ceil(cooldown / 1000 / 60)} minutos`)
-
-            setTimeout(() => {
-                surpriseCooldown = false
-                surprise.disabled = false
-                surprise.style.opacity = '1'
-                surprise.style.cursor = 'pointer'
-                alert('Bônus pronto novamente')
-            }, cooldown)
-        }
+            localStorage.setItem('memesData', JSON.stringify(memes))
+        }, 999 )
     </script>
-
 </body>
 </html>
