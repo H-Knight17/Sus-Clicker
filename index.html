@@ -78,6 +78,10 @@
             color: white;
             opacity: 0;
             transition: 1s;
+            grid-column: span 5;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
         }
         .titleLoja:hover{
             font: normal 25pt Arial;
@@ -88,6 +92,10 @@
             font: normal 20pt Arial;
             color: white;
             opacity: 1;
+            grid-column: span 5;
+            width: 100%;
+            text-align: center;
+            margin: 10px 0;
         }
         #upgrades, #loja{
             display: flex;
@@ -107,6 +115,12 @@
             width: 75%;
             height: 30%;
             border: 2px dashed #ff4646;
+        }
+        #upgradeArea{
+            display: grid;
+            width: 70%;
+            height: 80%;
+            grid-template-columns: repeat(4, 1fr);
         }
         .meme-card, .reset-card{
             display: flex;
@@ -150,11 +164,38 @@
             margin: 2px 0;
             font-size: 13pt;
         }
+        .upgradeAddClick{
+            display: flex;
+            background: silver;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border: 2px solid white;
+            border-radius: 15px;
+            box-shadow: 0 0 10px silver;
+        }
+        .upgradeMultClick{
+            display: flex;
+            background: gold;
+            width: 50px;
+            height: 50px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            border: 2px solid yellow;
+            border-radius: 15px;
+            box-shadow: 0 0 10px gold;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div id="leftSide">
+            <button onclick="resetAll()">Apagar Tudo</button>
             <h1 id="pointsManager">Social Credits:</h1>
             <h2 id="ppsManager">por segundo:</h2>
             <img src="images/sus.png" alt="O sus" id="sus" onclick="susClick()">
@@ -163,6 +204,7 @@
         <div id="rightSide">
             <div id="upgrades">
                 <h2 class="titleUpgrades">Upgrades</h2>
+                <div id="upgradeArea"></div>
             </div>
 
             <div id="loja">
@@ -180,6 +222,7 @@
 
         let clickValue = valorClique ? Number(valorClique) : 1
         let points = pontos ? Number(pontos) : 0
+        let cps = clickValue
         let totalClicks = clicksTotais ? Number(clicksTotais) : 0
         let pps = pointsPerSecond ? Number(pointsPerSecond) : 0
 
@@ -198,201 +241,285 @@
                 imagem: 'images/memreset.jpeg',
                 nome: 'The Grand Reset of Memes',
                 ano: 2026,
-                preco: 600e15,
+                precoBase: 600e15,
+                preco: 0,
                 gera: Infinity,
                 resets: 0,
-                som: 'sounds/reset.mp3'
+                som: 'sounds/theReset.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/tralalero.jpeg',
                 nome: 'Tralalero',
                 ano: 2025,
-                preco: 15,
+                precoBase: 15,
+                preco: 0,
                 gera: 0.5,
                 quantidade: 0,
-                som: 'sounds/tralalero.mp3'
+                som: 'sounds/tralalero.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/chillGuy.jpeg',
                 nome: 'Cara Tranquilo',
                 ano: 2024,
-                preco: 100,
+                precoBase: 100,
+                preco: 0,
                 gera: 2,
                 quantidade: 0,
-                som: 'sounds/chill.mp3'
+                som: 'sounds/chill.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/skibidi.jpeg',
                 nome: 'Skibidi Toilet',
                 ano: 2023,
-                preco: 1100,
+                precoBase: 1100,
+                preco: 0,
                 gera: 8,
                 quantidade: 0,
-                som: 'sounds/skibidi.mp3'
+                som: 'sounds/skibidi.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/mrFeast.jpeg',
                 nome: 'Mr Feast',
                 ano: 2022,
-                preco: 12000,
+                precoBase: 12000,
+                preco: 0,
                 gera: 47,
                 quantidade: 0,
-                som: 'sounds/feast.mp3'
+                som: 'sounds/feast.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/axel.jpeg',
                 nome: 'Axel in Harlem',
                 ano: 2021,
-                preco: 130000,
+                precoBase: 1300000,
+                preco: 0,
                 gera: 260,
                 quantidade: 0,
-                som: 'sounds/axel.mp3'
+                som: 'sounds/axel.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/coffin.jpeg',
                 nome: 'Coffin Dance',
                 ano: 2020,
-                preco: 1400000,
+                precoBase: 1400000,
+                preco: 0,
                 gera: 1250,
                 quantidade: 0,
-                som: 'sounds/coffinDance.mp3'
+                som: 'sounds/coffinDance.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/woman.jpeg',
                 nome: 'Woman & Cat',
                 ano: 2019,
-                preco: 20000000,
+                precoBase: 2e7,
+                preco: 0,
                 gera: 5500,
                 quantidade: 0,
-                som: 'sounds/woman.mp3'
+                som: 'sounds/woman.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/knuckles.jpeg',
                 nome: 'Ugandan Knuckles',
                 ano: 2018,
-                preco: 160000000,
+                precoBase: 1.6e8,
+                preco: 0,
                 gera: 17600,
                 quantidade: 0,
-                som: 'sounds/knuckles.mp3'
+                som: 'sounds/knuckles.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/BF.jpeg',
                 nome: 'Distracted BF',
                 ano: 2017,
-                preco: 500000000,
+                precoBase: 5e8,
+                preco: 0,
                 gera: 35000,
                 quantidade: 0,
-                som: 'sounds/distractedBF.mp3'
+                som: 'sounds/distractedBF.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/dat.jpeg',
                 nome: 'Dat Boi',
                 ano: 2016,
-                preco: 750000000,
+                precoBase: 7.5e8,
+                preco: 0,
                 gera: 70000,
                 quantidade: 0,
-                som: 'sounds/dat.mp3'
+                som: 'sounds/dat.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/john.jpeg',
                 nome: 'John Cena',
                 ano: 2015,
-                preco: 1500000000,
+                precoBase: 1.5e9,
+                preco: 0,
                 gera: 150000,
                 quantidade: 0,
-                som: 'sounds/john.mp3'
+                som: 'sounds/john.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/kermit.jpeg',
                 nome: 'Kermit',
                 ano: 2014,
-                preco: 3900000000,
+                precoBase: 3.9e9,
+                preco: 0,
                 gera: 640000,
                 quantidade: 0,
-                som: 'sounds/kermit.mp3'
+                som: 'sounds/kermit.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/doge.jpeg',
                 nome: 'Doge',
                 ano: 2013,
-                preco: 15000000000,
+                precoBase: 1.5e10,
+                preco: 0,
                 gera: 1500000,
                 quantidade: 0,
-                som: 'sounds/doge.mp3'
+                som: 'sounds/doge.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/gangnam.jpeg',
                 nome: 'Gangnam Style',
                 ano: 2012,
-                preco: 59000000000,
+                precoBase: 5.9e10,
+                preco: 0,
                 gera: 5300000,
                 quantidade: 0,
-                som: 'sounds/gangnam.mp3'
+                som: 'sounds/gangnam.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/nyan.png',
                 nome: 'Nyan Cat',
                 ano: 2011,
-                preco: 97000000000,
+                precoBase: 9.7e10,
+                preco: 0,
                 gera: 25000000,
                 quantidade: 0,
-                som: 'sounds/nyan.mp3'
+                som: 'sounds/nyan.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/troll.png',
                 nome: 'Troll Face',
                 ano: 2010,
-                preco: 130000000000,
+                precoBase: 1.3e11,
+                preco: 0,
                 gera: 70000000,
                 quantidade: 0,
-                som: 'sounds/troll.mp3'
+                som: 'sounds/troll.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/keyboardCat.jpeg',
                 nome: 'Keyboard Cat',
                 ano: 2009,
-                preco: 380000000000,
+                precoBase: 3.8e11,
+                preco: 0,
                 gera: 180000000,
                 quantidade: 0,
-                som: 'sounds/keyboardCat.mp3'
+                som: 'sounds/keyboardCat.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/chipmunk.jpeg',
                 nome: 'Dramatic Chipmunk',
                 ano: 2008,
-                preco: 700000000000,
+                precoBase: 7e11,
+                preco: 0,
                 gera: 500000000,
                 quantidade: 0,
-                som: 'sounds/dramatic.mp3'
+                som: 'sounds/dramatic.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/rickroll.jpeg',
                 nome: 'Rickroll',
                 ano: 2007,
-                preco: 1.72e12,
+                precoBase: 1.72e12,
+                preco: 0,
                 gera: 2.6e9,
                 quantidade: 0,
-                som: 'sounds/rick.mp3'
+                som: 'sounds/rick.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/dexter.gif',
                 nome: 'Surprise Motherfucker',
                 ano: 2006,
-                preco: 16e12,
+                precoBase: 16e12,
+                preco: 0,
                 gera: 10e9,
                 quantidade: 0,
-                som: 'sounds/surprise.mp3'
+                som: 'sounds/surprise.mp3',
+                multiplier:0,
+                naLoja: false
             },
             {
                 imagem: 'images/leroyJenkins.jpeg',
                 nome: 'Leeroy Jenkins',
                 ano: 2005,
-                preco: 99e12,
+                precoBase: 99e12,
+                preco: 0,
                 gera: 65e9,
                 quantidade: 0,
-                som: 'sounds/leroy.mp3'
+                som: 'sounds/leroy.mp3',
+                multiplier:0,
+                naLoja: false
             }
         ]
+
+        function resetAll(){
+            if (!confirm("Deseja realmente resetar todo seu progresso?")) return
+
+            points = 0
+            pps = 0
+            totalClicks = 0
+            clickValue = 1
+            
+            memes.forEach(meme => {
+                meme.quantidade = 0;
+                meme.preco = meme.precoBase
+                meme.multiplier =0
+            })
+
+            localStorage.clear()
+            location.reload()
+        }
 
         if(Memes){
             let dados = JSON.parse(Memes)
@@ -430,6 +557,22 @@
 
             somSus.currentTime = -1.5
             somSus.play()
+
+            //Upgrades de soma no clique
+
+            if (totalClicks >= 100 && clickValue < 2) createUpgradeAddClick ('👆', 'Dedo Inquieto', 2, 500)
+            if (totalClicks >= 500 && clickValue < 5) createUpgradeAddClick ('✊', '"Memes ou Morte"', 5, 1000)
+            if (totalClicks >= 750 && clickValue < 15) createUpgradeAddClick ('🖱️', 'Mouse da Shopee', 15, 1500)
+            if (totalClicks >= 1000 && clickValue < 50) createUpgradeAddClick ('⛏️', 'I, am Steve', 50, 2000)
+            if (totalClicks >= 2500 && clickValue < 100) createUpgradeAddClick ('🗿', 'Sigma', 100, 5000) 
+
+            //Upgrades de multiplicação no clique
+
+            if (totalClicks >= 5000) createUpgradeMultClick ('🕳️', 'FIRE IN THE ROLE', 2.5, 10000) // 100 > 250
+            if (totalClicks >= 7500) createUpgradeMultClick ('🍓', 'Elefante Morango', 2, 15000) // 250 > 500
+            if (totalClicks >= 10000) createUpgradeMultClick ('💙', '🎶We live, we love, we lie🎶', 2, 20000) // 500 > 1000
+            if (totalClicks >= 15000) createUpgradeMultClick ('🐔', 'Chicken Jockey', 2.5, 30000) // 1000 > 2500
+            if (totalClicks >= 25000) createUpgradeMultClick ('🐷', 'John Pork is calling', 2, 75000) // 2500 > 5000
         }
 
         function renderShop(){
@@ -460,12 +603,14 @@
                 `
 
                 function comprarMeme(){
+                    meme.preco = meme.precoBase
+
                     if(points >= meme.preco){
 
                         let memeSom = new Audio(meme.som)
 
                         points -= meme.preco
-                        meme.preco = Math.round(meme.preco * 1.15)
+                        meme.preco = meme.precoBase * 1.15
                         meme.quantidade +=1
                         pps += meme.gera
 
@@ -486,10 +631,72 @@
             });
         }
 
+        function createUpgradeAddClick(icon, name, newValue, cost){
+            let upgradeShop = document.getElementById('upgradeArea')
+
+            if (document.getElementById(`id-${name}`)) return
+
+            let upgradeAddClick = document.createElement('div')
+
+            upgradeAddClick.id = `id-${name}`
+            upgradeAddClick.classList.add('upgradeAddClick')
+            upgradeAddClick.addEventListener('click', buyAddUpgrade)
+
+            upgradeAddClick.innerHTML = `${icon}`
+            upgradeAddClick.title = `${name}: O clique agora vale ${newValue}. Custa ${cost}.`
+
+            function buyAddUpgrade(){
+
+                if(points >= cost){
+                    points -= cost
+                    clickValue = newValue
+                    upgradeAddClick.remove()
+                    pointManager.innerHTML = `Social Credits: ${points}`
+                }
+                else{
+                    somNop.play()
+                }
+            }
+
+            upgradeShop.appendChild(upgradeAddClick)
+        }
+
+        function createUpgradeMultClick(icon, name, mult, cost){
+            let upgradeShop = document.getElementById('upgradeArea')
+
+            if (document.getElementById(`id-${name}`)) return
+
+            let upgradeAddClick = document.createElement('div')
+
+            upgradeAddClick.id = `id-${name}`
+            upgradeAddClick.classList.add('upgradeMultClick')
+            upgradeAddClick.addEventListener('click', buyAddUpgrade)
+
+            upgradeAddClick.innerHTML = `${icon}`
+            upgradeAddClick.title = `${name}: Seu clique é multiplicado por ${mult}. Custa ${cost}.`
+
+            function buyAddUpgrade(){
+
+                if(points >= cost){
+                    points -= cost
+                    clickValue *= mult
+                    upgradeAddClick.remove()
+                    pointManager.innerHTML = `Social Credits: ${points}`
+                }
+                else{
+                    somNop.play()
+                }
+            }
+
+            upgradeShop.appendChild(upgradeAddClick)
+        }
+
         renderShop()
 
         setInterval(function(){
             points += pps
+
+            cps + pps 
 
             pointManager.innerHTML = `Social Credits: ${formatarGrande(points)}`
             ppsManager.innerHTML = `por segundo: ${formatarGrande(pps)}`
