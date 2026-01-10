@@ -195,9 +195,15 @@
             box-shadow: 0 0 10px gold;
         }
         @media (max-width: 768px){
+            body{
+                overflow-y: auto;
+                align-items: flex-start;
+            }
             .container{
-                width: 100vw;
-                height: 100vh;
+                flex-direction: column;
+                height: auto;
+                padding: 15px;
+                gap: 15px;
             }
             .mobile-container{
                 display: flex;
@@ -211,16 +217,35 @@
                 justify-content: center;
             }
             #rightSide{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                align-content: center;
-                background: #1b1b1b;
-                border: 3px solid red;
-                border-radius: 15px;
-                max-width: 42%;
-                height: 100vh;
-                gap: 20px;
+                max-width: 100%;
+                width: 100%;
+                height: auto;
+                border-top: 2px solid red;
+                border-left: none;
+            }
+            #loja{
+                height: 400px;
+            }
+            #upgrades{
+                width: 300px;
+                height: auto;
+                min-height: 100px;
+            }
+            #upgradeArea{
+                grid-template-columns: repeat(5, 1fr);
+            }
+            .meme-card, .reset-card{
+                width: 200px;
+                padding: 10px;
+                font: normal 7.5pt Arial;
+                color: white;
+            }
+            .meme-info p{
+                font: normal 5pt Arial;
+                color: white;
+            }
+            .titleLoja, .titleUpgrades{
+                opacity: 1;
             }
         }
     </style>
@@ -571,14 +596,14 @@
 
         function formatarGrande(n){ 
             if (n == Infinity) return ('Infinito')
-            if (n >= 1e30) return ( n / 1e30).toFixed(2) + 'Nonilhões'
-            if (n >= 1e27) return ( n / 1e27).toFixed(2) + 'Octilhões'
-            if (n >= 1e24) return ( n / 1e24).toFixed(2) + 'Septilhões'
-            if (n >= 1e21) return ( n / 1e21).toFixed(2) + 'Sextilhões'
-            if (n >= 1e18) return ( n / 1e18).toFixed(2) + 'Quintilhões'
-            if (n >= 1e15) return ( n / 1e15).toFixed(2) + 'Quatrilhões'
-            if (n >= 1e12) return ( n / 1e12).toFixed(2) + 'Trilhões'
-            if (n >= 1e9) return ( n / 1e9).toFixed(2) + 'Bilhões'
+            if (n >= 1e30) return ( n / 1e30).toFixed(2) + 'Non'
+            if (n >= 1e27) return ( n / 1e27).toFixed(2) + 'Oct'
+            if (n >= 1e24) return ( n / 1e24).toFixed(2) + 'Sep'
+            if (n >= 1e21) return ( n / 1e21).toFixed(2) + 'Sex'
+            if (n >= 1e18) return ( n / 1e18).toFixed(2) + 'Qui'
+            if (n >= 1e15) return ( n / 1e15).toFixed(2) + 'Qua'
+            if (n >= 1e12) return ( n / 1e12).toFixed(2) + 'Tri'
+            if (n >= 1e9) return ( n / 1e9).toFixed(2) + 'Bi'
             if (n >= 1e6) return ( n / 1e6).toFixed(2) + 'Milhões'
             return n.toLocaleString('pt-BR')
         }
