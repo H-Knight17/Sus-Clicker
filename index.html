@@ -596,15 +596,15 @@
 
         function formatarGrande(n){ 
             if (n == Infinity) return ('Infinito')
-            if (n >= 1e30) return ( n / 1e30).toFixed(2) + 'Non'
-            if (n >= 1e27) return ( n / 1e27).toFixed(2) + 'Oct'
-            if (n >= 1e24) return ( n / 1e24).toFixed(2) + 'Sep'
-            if (n >= 1e21) return ( n / 1e21).toFixed(2) + 'Sex'
-            if (n >= 1e18) return ( n / 1e18).toFixed(2) + 'Qui'
-            if (n >= 1e15) return ( n / 1e15).toFixed(2) + 'Qua'
-            if (n >= 1e12) return ( n / 1e12).toFixed(2) + 'Tri'
-            if (n >= 1e9) return ( n / 1e9).toFixed(2) + 'Bi'
-            if (n >= 1e6) return ( n / 1e6).toFixed(2) + 'Milhões'
+            if (n >= 1e30) return ( n / 1e30).toFixed(2) + 'non'
+            if (n >= 1e27) return ( n / 1e27).toFixed(2) + 'oct'
+            if (n >= 1e24) return ( n / 1e24).toFixed(2) + 'sep'
+            if (n >= 1e21) return ( n / 1e21).toFixed(2) + 'sex'
+            if (n >= 1e18) return ( n / 1e18).toFixed(2) + 'qui'
+            if (n >= 1e15) return ( n / 1e15).toFixed(2) + 'qua'
+            if (n >= 1e12) return ( n / 1e12).toFixed(2) + 'tri'
+            if (n >= 1e9) return ( n / 1e9).toFixed(2) + 'bi'
+            if (n >= 1e6) return ( n / 1e6).toFixed(2) + 'mi'
             return n.toLocaleString('pt-BR')
         }
 
