@@ -301,7 +301,7 @@
                 imagem: 'images/axel.jpeg',
                 nome: 'Axel in Harlem',
                 ano: 2021,
-                precoBase: 1300000,
+                precoBase: 130000,
                 preco: 0,
                 gera: 260,
                 quantidade: 0,
@@ -580,6 +580,11 @@
             loja.innerHTML = '<h2 class="titleLoja">Loja</h2>'
 
             memes.forEach(meme => {
+
+                let precoAtual = Math.round(meme.precoBase * Math.pow(1.15, meme.quantidade))
+
+                if (meme.resets !== undefined) precoAtual = meme.precoBase
+
                 let memeCard = document.createElement('div')
                 
                 memeCard.addEventListener('click', comprarMeme)
@@ -596,29 +601,26 @@
                     <img src="${meme.imagem}" class="memeImage">
                     <div class="meme-info">
                         <p>Ano: ${meme.ano}</p>
-                        <p>Preço: ${formatarGrande(meme.preco)}</p>
+                        <p>Preço: ${formatarGrande(precoAtual)}</p>
                         <p>Gera: ${formatarGrande(meme.gera)}</p>
                         <p>${contador} </p>
                     </div>
                 `
 
                 function comprarMeme(){
-                    meme.preco = meme.precoBase
 
-                    if(points >= meme.preco){
+                    if(points >= precoAtual){
 
                         let memeSom = new Audio(meme.som)
 
-                        points -= meme.preco
-                        meme.preco = meme.precoBase * 1.15
+                        points -= precoAtual
                         meme.quantidade +=1
                         pps += meme.gera
-
-                        memeSom.currentTime = 0
                         memeSom.play()
 
                         pointManager.innerHTML = `Social Credits: ${points}`
                         ppsManager.innerHTML = `por segundo: ${pps}`
+                        renderShop()
                     }
                     else{
                         somNop.currentTime = 0
